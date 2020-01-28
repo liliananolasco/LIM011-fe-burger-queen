@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.jpeg" width="300px">
-    <HelloWorld msg="seleccionar "/>
-    <input type="text" v-model="newMenu" placeholder="escribe"/><button @click="agregarMenu">ok</button>
-    <ul>
-      <li v-for="menu of menu" :key="menu.id">
-        {{menu.cantidad}} - {{menu.nombre}}
-        <span v-if="menu.cantidad === 0"> sin estock</span>
-        
-      </li>
-    </ul>
+    <img alt="Vue logo" src="./assets/logo.jpeg" width="300px" />
     
+    <h3>Nombre del cliente</h3>
+    <input type="text" v-model="nombreCliente" placeholder="nombre" />
+    <button @click="guardarCliente()">ok</button>
+    <!-- <ul>
+      <li:key="cliente.id">
+        {{cliente.nombre}}
+v-for="cliente of cliente"       
+       
+      </li>
+    </ul> -->
+    <HelloWorld msg="seleccionar "/>
   </div>
 </template>
 
@@ -24,46 +26,46 @@ export default {
     },
   data(){
     return {
-      menu:[
-    {nombre:'hambuerguesa', cantidad :1},
-    {nombre:'bebidas', cantidad:4},
-    {nombre:'adicionales', cantidad:8}
-  ],
-  newMenu:''
-  }
-  },
-  methods:{
-agregarMenu(){
-  this.menu.push({
-    nombre: this.newMenu, cantidad:0
-  })
-},
-
-  }
-  
-
-    /* data() {
-    return {
-      saludo: 'pizza',
-      name: 'orden'
+      cliente:''
+      
     }
   },
-    methods: {
-     /*  alerta() {
-        this.pedido = 'papas';
-      } 
-    } */
+  methods:{
+    guardarCliente(){
+      this.cliente = nombreCliente,
+    }
+  },
 }
+
+
+
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
-
 </style>
+
+/* data(){
+    return {
+      cliente:[
+        {nombre:'cliente'}
+      ],
+      newCliente:''
+    }
+  },
+  methods:{
+    agregarCliente(){
+      this.cliente.push({
+        nombre:this.newCliente
+      })
+      this.newCliente= ''
+    }
+  },
+} */

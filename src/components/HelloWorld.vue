@@ -2,9 +2,15 @@
 <template>
   <div  class="hello">
     <h1>{{ msg }}</h1>
-    <h3>Nombre del cliente</h3>
+    <button type="button" class="btn btn-lg btn-pill btn-primary" @click="agregarMenu('Hamburguesa Simple')"><img alt="Vue logo" src="../assets/hamburguesasimple.png" width="100px">Hamburgesa Simple</button>
+    <button class="btn btn-lg btn-pill btn-secondary" @click="agregarMenu('Hamburguesa Doble')"><img alt="Vue logo" src="../assets/hamburguesa-doble.jpg" width="100px">Hamburguesa doble</button>
+
+    <li v-for="menu of menu" :key="menu.id">
+        {{menu.cantidad}} - {{menu.nombre}}
+        <span v-if="menu.cantidad === 0"></span>
+      </li>
    <!--  <input type="text" v-model="NameCientele"/>
-         <button type="button" class="btn btn-lg btn-pill btn-primary" @:click="pedido">pedido</button>
+        <button type="button" class="btn btn-lg btn-pill btn-primary" @:click="pedido">pedido</button>
         <button type="button" class="btn btn-lg btn-pill btn-primary" v-on:click="saludo" >{{saludo}}</button>
       <ul>
       <button >Desayuno</button>
@@ -39,7 +45,21 @@ export default {
   props: {
     msg: String
   },
-  
+  data(){
+    return {
+      menu:[
+        {nombre:'hamburguesa', cantidad :1},
+      ],
+      newMenu:''
+    }
+},
+methods:{
+    agregarMenu(alimento){
+      this.menu.push({
+        nombre: alimento, cantidad:1
+      })
+    },
+}
 }
 
 </script>
