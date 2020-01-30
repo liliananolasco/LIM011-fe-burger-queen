@@ -1,17 +1,16 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.jpeg" width="300px" />
-    
     <h3>Nombre del cliente</h3>
-    <div v-for="cliente in cliente" :key="cliente.id">
     <p>
-    <span class="cat">{{cliente}}</span> <button @click="removeCliente(n)">Remove</button>
+      <input v-model="newCliente"> 
+      <button @click="addCliente">ok</button>
     </p>
+    <div v-for="cliente in cliente" :key="cliente.id">
+      <p>
+        <span class="cliente">{{cliente}}</span> <button @click="removeCliente(n)">X</button>
+      </p>
     </div>
-    <p>
-    <input v-model="newCliente"> 
-    <button @click="addCliente">ok</button>
-  </p>
     <HelloWorld msg="seleccionar "/>
   </div>
 </template>
@@ -33,7 +32,7 @@ export default {
   mounted() {
     if(localStorage.getItem('cliente')) {
       try {
-        this.cliente = JSON.parse(localStorage.getItem('clientes'));
+        this.cliente = JSON.parse(localStorage.getItem('cliente'));
       } catch(e) {
         localStorage.removeItem('cliente');
       }
