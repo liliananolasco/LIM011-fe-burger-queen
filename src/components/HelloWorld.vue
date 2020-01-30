@@ -2,15 +2,15 @@
 <template>
   <div  class="hello">
     <h1>{{ msg }}</h1>
-    <button type="button" class="btn btn-lg btn-pill btn-primary" @click="addMenu('Hamburguesa Simple')">
-      <img alt="Vue logo" src="../assets/hamburguesasimple.png" width="100px">Hamburgesa Simple</button>
-    <button class="btn btn-lg btn-pill btn-primary" @click="addMenu('Hamburguesa Doble')">
-      <img alt="Vue logo" src="../assets/hamburguesa-doble.jpg" width="100px">Hamburguesa doble</button>
+    <button type="button" class="btn btn-lg btn-pill btn-primary" @click="agregarMenu('Hamburguesa Simple')"><img alt="Vue logo" src="../assets/hamburguesasimple.png" width="100px">Hamburgesa Simple</button>
+    <button class="btn btn-lg btn-pill btn-secondary" @click="agregarMenu('Hamburguesa Doble')"><img alt="Vue logo" src="../assets/hamburguesa-doble.jpg" width="100px">Hamburguesa doble</button>
 
     <li v-for="menu of menu" :key="menu.id">
-        {{menu.cantidad}} - {{menu.nombre}}
-        <span v-if="menu.cantidad === 0">{{menu}}</span>
-      </li>
+      <input type="number"  class="menu" name="menu" v-model.number="agregarMenu"> - {{menu.nombre}}
+      <p>
+        <span v-if="menu.cantidad === 0">{{menu}}</span><button @click="removeMenu(n)">X</button>
+      </p>
+    </li>
    <!--  <input type="text" v-model="NameCientele"/>
         <button type="button" class="btn btn-lg btn-pill btn-primary" @:click="pedido">pedido</button>
         <button type="button" class="btn btn-lg btn-pill btn-primary" v-on:click="saludo" >{{saludo}}</button>
@@ -47,7 +47,7 @@ export default {
       newMenu:null
     }
 },
-mounted() {
+/* mounted() {
     if(localStorage.getItem('menu')) {
       try {
         this.menu = JSON.parse(localStorage.getItem('menu'));
@@ -55,24 +55,22 @@ mounted() {
         localStorage.removeItem('menu');
       }
     }
-  },
-  methods: {
-    addMenu() {
-      // ensure they actually typed something
-      if(!this.newMenu) return;
-      this.menu.push(this.newMenu);
-      this.newMenu = '';
-      this.saveMenu();
+  }, */
+methods:{
+    agregarMenu(alimento){
+      this.menu.push({
+        nombre: alimento, cantidad:1
+      })
     },
     removeMenu(x) {
       this.menu.splice(x,1);
       this.saveMenu();
     },
-    saveMenu() {
+    /* saveMenu() {
       let parsed = JSON.stringify(this.menu);
       localStorage.setItem('menu', parsed);
-    }
-  }
+    } */
+}
 }
 
 </script>
@@ -93,5 +91,9 @@ li {
 }
 button {
   margin: 30px;
+}
+.menu{
+  width: 60px;
+  height: 40px;
 }
 </style>
