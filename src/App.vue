@@ -60,6 +60,7 @@ export default {
 </script>
 
 <style>
+@import'../node_modules/bootstrap/dist/css/bootstrap.css';
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -69,33 +70,4 @@ export default {
   margin-top: 60px;
 }
 </style>
-
-/* data(){
-    return {
-      cliente:[
-        {nombre:'cliente'}
-      ],
-      newCliente:''
-    }
-  },
-  methods:{
-    agregarCliente(){
-      this.cliente.push({
-        nombre:this.newCliente
-      })
-      this.newCliente= ''
-    }
-  },
-} */
-
-
-
-const app = new Vue({
-  el:'#app',
-  data: {
-    cats:[],
-    newCat:null
-  },
-  
-})
 
