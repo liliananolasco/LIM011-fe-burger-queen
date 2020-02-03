@@ -2,17 +2,17 @@
 <template>
   <div  class="hello">
     <h1>{{ msg }}</h1>
-    <button type="button" class="btn btn-lg btn-pill btn-primary" @click="agregarMenu('Hamburguesa Simple')">
+    <button type="button" class="btn btn-lg btn-pill btn-primary" @click="agregarMenu('Hamburguesa Simple')" >
       <img alt="Vue logo" src="../assets/hamburguesasimple.png" width="100px">Hamburgesa Simple</button>
     <button  class="btn btn-lg btn-pill btn-secondary" @click="agregarMenu('Hamburguesa Doble')">
       <img alt="Vue logo" src="../assets/hamburguesa-doble.jpg" width="100px">Hamburguesa doble</button>
-
     <li v-for="menu of menu" :key="menu.id">
-      {{menu.cantidad}} - {{menu.nombre}}
-      <p>
-        <span v-if="menu.cantidad ===0">{{menu}}</span><button @click="removeMenu(n)">X</button>
-      </p>
+      <h3>{{menu.cantidad}} - {{menu.nombre}} - {{menu.precio}}
+      <button @click="menu.cantidad++, menu.precio=menu.precio+10">+</button>
+      <button @click="menu.cantidad--, menu.precio=menu.precio-10">-</button>
+      <button @click="removeMenu(n)">X</button></h3>
     </li>
+    <h4> TOTAL : {{sumarMenu}}</h4>
   <!--  <input type="text" v-model="NameCientele"/>
         <button type="button" class="btn btn-lg btn-pill btn-primary" @:click="pedido">pedido</button>
         <button type="button" class="btn btn-lg btn-pill btn-primary" v-on:click="saludo" >{{saludo}}</button>
@@ -46,7 +46,9 @@ export default {
   data(){
     return {
       menu:[],
-      newMenu:null
+      newMenu:null,
+      alimento:0,
+      total: 0,
     }
 },
 /* mounted() {
@@ -60,13 +62,9 @@ export default {
   }, */
 methods:{
     agregarMenu(alimento){
-      if(menu.nombre ===alimento){
-        cantidad+=1
-      }
-
-      this.menu.push({
-        nombre: alimento, cantidad: '',
-      })
+        this.menu.push({
+        nombre: alimento, cantidad: this.alimento = 1, precio: this.menu.precio = 10,
+      })      
     },
     removeMenu(x) {
       this.menu.splice(x,1);
@@ -76,7 +74,20 @@ methods:{
       let parsed = JSON.stringify(this.menu);
       localStorage.setItem('menu', parsed);
     } */
-}
+},
+  computed:{
+    sumarMenu() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.total = 0;
+      this.menu.forEach((menu) => {
+        // eslint-disable-next-line no-console
+        console.log(menu);
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.total = this.total + menu.precio;
+      });
+      return this.total;
+    },
+  }
 }
 
 </script>
@@ -96,7 +107,7 @@ li {
   margin: 0 10px;
 }
 button {
-  margin: 30px;
+  margin: 10px;
 }
 .menu{
   width: 60px;
