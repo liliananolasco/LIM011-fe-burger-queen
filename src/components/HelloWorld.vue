@@ -13,6 +13,26 @@
       <button @click="removeMenu(n)">X</button></h3>
     </li>
     <h4> TOTAL : {{sumarMenu}}</h4>
+    
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Categoria</th>
+      <th scope="col">nombre</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">precio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+  </tbody>
+</table>
+      
   <!--  <input type="text" v-model="NameCientele"/>
         <button type="button" class="btn btn-lg btn-pill btn-primary" @:click="pedido">pedido</button>
         <button type="button" class="btn btn-lg btn-pill btn-primary" v-on:click="saludo" >{{saludo}}</button>

@@ -4,6 +4,7 @@
     <h3>Nombre del cliente</h3>
     <p>
       <input v-model="newCliente"> 
+      
       <button @click="addCliente">ok</button>
     </p>
     <div v-for="cliente in cliente" :key="cliente.id">
@@ -17,14 +18,25 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import Firebase from 'firebase';
+import config from './config';
+let app = Firebase.initializeApp(config);
+let db = app.database();
+let clientesRef = db.ref('Clientes');
 
 export default {
   name:'app',
+  firebase:{
+    clientes:clientesRef
+  },
   components: {
     HelloWorld
     },
   data(){
     return {
+      /* cliente:{
+        name:'',
+      }, */
       cliente:[],
       newCliente:null      
     }
@@ -39,6 +51,10 @@ export default {
     }
   },
   methods: {
+    /* addCliente(){
+      clienteRef.Push(this.newCliente);
+      this.newCliente.name = '';
+    }, */
     addCliente() {
       // ensure they actually typed something
       if(!this.newCliente) return;
