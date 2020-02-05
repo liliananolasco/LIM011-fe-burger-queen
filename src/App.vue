@@ -18,11 +18,18 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import Firebase from 'firebase';
-import config from './config';
-let app = Firebase.initializeApp(config);
-let db = app.database();
+import db from './main.js';
+
+
 let clientesRef = db.ref('Clientes');
+
+// leer datos
+db.collection("burger").get().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+      // eslint-disable-next-line no-console
+      console.log(`${doc.id} => ${doc.data()}`);
+  });
+});
 
 export default {
   name:'app',
