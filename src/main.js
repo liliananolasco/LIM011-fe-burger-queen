@@ -19,7 +19,7 @@ const firebaseConfig = {
   measurementId: "G-TNZS7K2KLN"
 };
 let app = firebase.initializeApp(firebaseConfig);
-export default app.database();
+export const db = app.firestore();
 
 import { firestorePlugin } from 'vuefire'
 Vue.use(firestorePlugin);

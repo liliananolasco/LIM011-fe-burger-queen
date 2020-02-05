@@ -14,17 +14,18 @@
     </div>
     <HelloWorld msg="seleccionar "/>
   </div>
+  
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import db from './main.js';
+import { db } from './main.js';
 
 
-let clientesRef = db.ref('Clientes');
+/* let clientesRef = db.ref('Clientes'); */
 
 // leer datos
-db.collection("burger").get().then((querySnapshot) => {
+db.collection('Products').get().then((querySnapshot) => {
   querySnapshot.forEach((doc) => {
       // eslint-disable-next-line no-console
       console.log(`${doc.id} => ${doc.data()}`);
@@ -34,7 +35,8 @@ db.collection("burger").get().then((querySnapshot) => {
 export default {
   name:'app',
   firebase:{
-    clientes:clientesRef
+    clientes:'',
+    /* clientesRef */
   },
   components: {
     HelloWorld
