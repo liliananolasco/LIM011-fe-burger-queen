@@ -19,12 +19,8 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import { db } from './main.js';
+import {db} from './db'
 
-
-/* let clientesRef = db.ref('Clientes'); */
-
-// leer datos
 db.collection('Products').get().then((querySnapshot) => {
   querySnapshot.forEach((doc) => {
       // eslint-disable-next-line no-console
