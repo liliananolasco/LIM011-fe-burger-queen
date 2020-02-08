@@ -81,11 +81,11 @@ export default {
     }
   }, */
 methods:{
-    agregarMenu(alimento){
+    /* agregarMenu(alimento){
         this.menu.push({
         nombre: alimento, cantidad: this.alimento = 1, precio: this.menu.precio = 10,
       })      
-    },
+    }, */
     removeMenu(x) {
       this.menu.splice(x,1);
       this.saveMenu();

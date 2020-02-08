@@ -52,7 +52,7 @@ export default {
       price:null,     
     }
   },
-  mounted() {
+  mounted(){
     if(localStorage.getItem('cliente')) {
       try {
         this.cliente = JSON.parse(localStorage.getItem('cliente'));
@@ -60,6 +60,7 @@ export default {
         localStorage.removeItem('cliente');
       }
     }
+    this.getProducts();
   },
   methods: {
     async getProducts(){
