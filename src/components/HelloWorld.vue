@@ -23,14 +23,14 @@
       <th scope="col">precio</th>
     </tr>
   </thead>
-  <tbody>
+  <!-- <tbody>
     <tr>
       <th scope="row">1</th>
       <td>Mark</td>
       <td>Otto</td>
       <td>@mdo</td>
     </tr>
-  </tbody>
+  </tbody> -->
 </table>
       
   <!--  <input type="text" v-model="NameCientele"/>

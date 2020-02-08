@@ -13,6 +13,14 @@
       </p>
     </div>
     <HelloWorld msg="seleccionar "/>
+    <tbody v-for="producto in productos" :key="producto.id">
+    <tr>
+      <th scope="row">{{producto.Category}}</th>
+      <td>{{producto.Name}}</td>
+      <td>{{producto.Type}}</td>
+      <td>{{producto.Price}}</td>
+    </tr>
+  </tbody>
   </div>
   
 </template>
@@ -20,13 +28,6 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import {db} from './db'
-
-db.collection('Products').get().then((querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-      // eslint-disable-next-line no-console
-      console.log(`${doc.id} => ${doc.data()}`);
-  });
-});
 
 export default {
   name:'app',
@@ -43,7 +44,12 @@ export default {
         name:'',
       }, */
       cliente:[],
-      newCliente:null      
+      newCliente:null,
+      productos:[],
+      category:null,
+      name:null,
+      type:null,
+      price:null,     
     }
   },
   mounted() {
@@ -56,6 +62,24 @@ export default {
     }
   },
   methods: {
+    async getProducts(){
+      try{
+        const producto = [];
+        db.collection('Products').get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            // eslint-disable-next-line no-console
+            console.log(`${doc.id} => ${doc.data().Price}`);
+            let eventoData = doc.data();
+            eventoData.id = doc.id;
+            producto.push(eventoData)
+          });
+      })
+      this.productos = producto;    
+      } catch(error){
+        // eslint-disable-next-line no-console
+        console.log(error);
+      }
+    },
     /* addCliente(){
       clienteRef.Push(this.newCliente);
       this.newCliente.name = '';
