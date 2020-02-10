@@ -22,6 +22,14 @@
       <th scope="col">Tipo</th>
       <th scope="col">precio</th>
     </tr>
+    <!-- <tbody v-for="producto in productos" :key="producto.id">
+    <tr>
+      <th scope="row">{{producto.Category}}</th>
+      <td>{{producto.Name}}</td>
+      <td>{{producto.Type}}</td>
+      <td>{{producto.Price}}</td>
+    </tr>
+  </tbody> -->
   </thead>
   <!-- <tbody>
     <tr>
@@ -71,7 +79,7 @@ export default {
       total: 0,
     }
 },
-/* mounted() {
+mounted() {
     if(localStorage.getItem('menu')) {
       try {
         this.menu = JSON.parse(localStorage.getItem('menu'));
@@ -79,7 +87,8 @@ export default {
         localStorage.removeItem('menu');
       }
     }
-  }, */
+    
+  }, 
 methods:{
     /* agregarMenu(alimento){
         this.menu.push({
