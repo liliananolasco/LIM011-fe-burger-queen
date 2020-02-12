@@ -10,12 +10,28 @@
         <span class="cliente">{{cliente}}</span> <button @click="removeCliente(n)">X</button>
       </p>
     </div>
-    <button type="button" class="btn btn-lg btn-pill btn-primary" @click="agregarMenu('Hamburguesa Simple')" >
-      <img alt="Vue logo" src="../assets/hamburguesasimple.png" width="100px">Hamburgesa Simple</button>
-    <button  class="btn btn-lg btn-pill btn-secondary" @click="agregarMenu('Hamburguesa Doble')">
-      <img alt="Vue logo" src="../assets/hamburguesa-doble.jpg" width="100px">Hamburguesa doble</button>
-    <li v-for="menu of menu" :key="menu.id">
-      <h3>{{menu.cantidad}} - {{menu.nombre}} - {{menu.precio}}
+    <ul>
+      <button @click="mostrarMenu('hamburguesas')">Hamburguesas</button>
+      <button @click="mostrarMenu('bebidas')">Bebidas</button>
+      <button @click="mostrarMenu('acompañamientos')">Acompañamientos</button>
+      <button @click="mostrarMenu('adicionales')">Adicionales</button>
+
+      <div id = "hamburguesa">
+          <ul v-for="menu in menus" :key="menu.id">
+            <!-- <button type="button" class="btn btn-lg btn-pill btn-primary">
+              <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" width="80px">{{menu.nombre}}</button> -->
+              <li v-for="item in menu.items" :key="item.id">
+                <button type="button" class="btn btn-lg btn-pill btn-primary">
+              <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" width="80px">{{item.Name}}</button>
+                  
+              </li>
+          </ul>
+      </div>
+
+    </ul>
+    
+    <li v-for="menu of menus" :key="menu.id">
+      <h3>{{menu.cantidad}} - {{menu.Name}} - {{menu.precio}}
       <button @click="menu.cantidad++, menu.precio=menu.precio+10">+</button>
       <button @click="menu.cantidad--, menu.precio=menu.precio-10">-</button>
       <button @click="removeMenu(n)">X</button></h3>
@@ -26,7 +42,6 @@
         <tr>
           <th scope="col">Categoria</th>
           <th scope="col">nombre</th>
-          <th scope="col">Tipo</th>
           <th scope="col">precio</th>
         </tr>
       </thead>
@@ -34,7 +49,6 @@
         <tr>
           <th scope="row">{{producto.Category}}</th>
           <td>{{producto.Name}}</td>
-          <td>{{producto.Type}}</td>
           <td>{{producto.Price}}</td>
         </tr>
       </tbody>
@@ -52,6 +66,9 @@ props: {
 firebase:{
   clientes:'',
 },
+
+
+  
 data(){
     return {
       /* cliente:{
@@ -60,14 +77,15 @@ data(){
       cliente:[],
       newCliente:null,
       productos:[],
+      menus:[],
       menu:[],
-      newMenu:null,
       alimento:0,
       total: 0,
-      category:null,
+      /* category:null,
       name:null,
       type:null,
-      price:null,     
+      price:null,  */ 
+     
     }
   },
   mounted(){
@@ -99,6 +117,7 @@ data(){
         console.log(error);
       }
     },
+    
     /* addCliente(){
       clienteRef.Push(this.newCliente);
       this.newCliente.name = '';
@@ -117,6 +136,38 @@ data(){
     saveCliente() {
       let parsed = JSON.stringify(this.cliente);
       localStorage.setItem('cliente', parsed);
+    },
+    mostrarMenu(Category) {
+      this.menus = [];
+      if (Category === 'hamburguesas') {
+        let menu = {id : 1, nombre: 'Hamburguesa Simple', imagen: 'hamburguesasimple.png', items: []}
+        menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Hamburguesas';
+          })
+        this.menus.push(menu);        
+      }  if (Category === 'bebidas') {
+        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'hamburguesa-doble.jpg', items: []}
+        this.menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Bebidas';
+          });
+        this.menus.push(this.menu);
+      } if (Category === 'acompañamientos') {
+        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'hamburguesa-doble.jpg', items: []}
+        this.menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Acompañamientos';
+          });
+        this.menus.push(this.menu);
+      } if (Category === 'adicionales') {
+        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'hamburguesa-doble.jpg', items: []}
+        this.menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Adicionales';
+          });
+        this.menus.push(this.menu);
+      }
+      
+    },
+    getImgUrl(imagen) {
+      return require('../assets/'+imagen);
     }
   },
   /* computed:{
@@ -144,6 +195,38 @@ data(){
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+li {
+  display: flex;
+  margin: 0 10px;
+}
+button {
+  margin: 10px;
+  
+}
+.btn-primary{
+margin: 30px;
+}
+
+/* .slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+ /*  transform: translateX(10px);
+  opacity: 0;
+} */ 
+.slide-fade-enter-active, .component-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.slide-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+#categorias{
+  display: flex;
 }
 </style>
 
