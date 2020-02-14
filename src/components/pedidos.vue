@@ -21,23 +21,45 @@
             <!-- <button type="button" class="btn btn-lg btn-pill btn-primary">
               <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" width="80px">{{menu.nombre}}</button> -->
               <li v-for="item in menu.items" :key="item.id">
-                <button type="button" class="btn btn-lg btn-pill btn-primary">
-              <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" width="80px">{{item.Name}}</button>
-                  
+                <button type="button" class="btn btn-outline-success" @click="agregarMenu()">
+                <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" class = "img"> {{item.Name}}
+                {{item.Price}}</button>
               </li>
           </ul>
       </div>
 
     </ul>
+    <table class = "table">
+      <thead>
+        <tr>
+          <th scope="col">Cantidad</th>
+          <th scopne="col">Nombre</th>
+          <th scope="col">Precio Und.</th>
+          <th scope="col">Precio Total</th>
+        </tr>
+      </thead>
+      <tbody v-for="item in menu.items" :key="item.id">
+        <tr>
+          <th scope="row">{{item.cantidad}}</th>
+          <td>{{item.Name}}</td>
+          <td>{{item.Price}}</td>
+          <td>{{item.Price * item.cantidad}}</td>
+          <button @click="item.cantidad++, item.precio+=item.precio">+</button>
+          <button @click="item.cantidad--, item.precio-=item.precio">-</button>
+          <button @click="removeMenu(n)">X</button>
+        </tr>
+      </tbody>
+    </table> 
     
     <li v-for="menu of menus" :key="menu.id">
-      <h3>{{menu.cantidad}} - {{menu.Name}} - {{menu.precio}}
-      <button @click="menu.cantidad++, menu.precio=menu.precio+10">+</button>
-      <button @click="menu.cantidad--, menu.precio=menu.precio-10">-</button>
+      
+      <h3>{{pedido.cantidad}} - {{pedido.nombre}} - {{pedido.Precio}}
+      <button @click="pedido.cantidad++, pedido.precio+=pedido.precio">+</button>
+      <button @click="pedido.cantidad--, pedido.precio-=pedido.precio">-</button>
       <button @click="removeMenu(n)">X</button></h3>
     </li>
     <!-- <h4> TOTAL : {{sumarMenu}}</h4> -->
-    <table class="table">
+    <!-- <table class="table">
       <thead>
         <tr>
           <th scope="col">Categoria</th>
@@ -52,7 +74,7 @@
           <td>{{producto.Price}}</td>
         </tr>
       </tbody>
-    </table> 
+    </table>  -->
   </div>
 </template>
 <script>
@@ -81,6 +103,7 @@ data(){
       menu:[],
       alimento:0,
       total: 0,
+      pedido:[],
       /* category:null,
       name:null,
       type:null,
@@ -146,7 +169,7 @@ data(){
           })
         this.menus.push(menu);        
       }  if (Category === 'bebidas') {
-        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'hamburguesa-doble.jpg', items: []}
+        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'bebidas.jpg', items: []}
         this.menu.items = this.productos.filter(function(producto){
               return producto.Category == 'Bebidas';
           });
@@ -168,7 +191,18 @@ data(){
     },
     getImgUrl(imagen) {
       return require('../assets/'+imagen);
-    }
+    },
+    agregarMenu(){
+      this.pedido.push({cantidad: this.item.Name=1})
+
+        /* this.menu.push({
+        nombre: Name, cantidad: this.menu.Name = 1, precio: this.menu.Price,
+      })      */ 
+    }, 
+    removeMenu(x) {
+      this.menu.splice(x,1);
+      this.saveMenu();
+    },
   },
   /* computed:{
     sumarMenu() {
@@ -204,29 +238,19 @@ button {
   margin: 10px;
   
 }
-.btn-primary{
-margin: 30px;
-}
-
-/* .slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
- /*  transform: translateX(10px);
-  opacity: 0;
-} */ 
-.slide-fade-enter-active, .component-fade-leave-active {
-  transition: opacity .3s ease;
-}
-.slide-fade-enter, .component-fade-leave-to
-/* .component-fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+.btn-outline-success{
+width: 200px;
+height: 100px;
+padding: 0;
+margin: 10px;
 }
 #categorias{
   display: flex;
+}
+.img{
+  width: 50px;
+  padding: 0;
+  margin: 0;
 }
 </style>
 
