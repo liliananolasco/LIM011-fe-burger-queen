@@ -163,25 +163,30 @@ data(){
     mostrarMenu(Category) {
       this.menus = [];
       if (Category === 'hamburguesas') {
-        let menu = {id : 1, nombre: 'Hamburguesa Simple', imagen: 'hamburguesasimple.png', items: []}
+        let menu = {nombre: 'Hamburguesa Simple', imagen: 'hamburguesasimple.png', items: []}
         menu.items = this.productos.filter(function(producto){
-              return producto.Category == 'Hamburguesas';
+              return producto.Category == 'Hamburguesas' && producto['Sub-Category'] == 'Simple';
+          })
+        this.menus.push(menu);        
+        menu = {nombre: 'Hamburguesa Doble', imagen: 'hamburguesa-doble.jpg', items: []}
+        menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Hamburguesas' && producto['Sub-Category'] == 'Doble';
           })
         this.menus.push(menu);        
       }  if (Category === 'bebidas') {
-        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'bebidas.jpg', items: []}
+        this.menu = { nombre: 'Hamburguesa Doble', imagen: 'bebidas.jpg', items: []}
         this.menu.items = this.productos.filter(function(producto){
               return producto.Category == 'Bebidas';
           });
         this.menus.push(this.menu);
       } if (Category === 'acompañamientos') {
-        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'hamburguesa-doble.jpg', items: []}
+        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'acompañamiento.jpg', items: []}
         this.menu.items = this.productos.filter(function(producto){
               return producto.Category == 'Acompañamientos';
           });
         this.menus.push(this.menu);
       } if (Category === 'adicionales') {
-        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'hamburguesa-doble.jpg', items: []}
+        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'adicionales.jpg', items: []}
         this.menu.items = this.productos.filter(function(producto){
               return producto.Category == 'Adicionales';
           });
