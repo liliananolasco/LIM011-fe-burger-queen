@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+
 import VueRouter from 'vue-router'
 /* import {db} from '../db'
 import { vuexFireMutations, firestoreAction } from 'vuexfire'; */
@@ -12,15 +13,15 @@ Vue.config.productionTip = false
 
 export default new Vuex.Store({
   state: {
-    numero: 1,
+    cantidad: 1,
     /* products: [], */
   },
   mutations: {
     aumentar(state){
-      state.numero++
+      state.cantidad++
     },
     disminuir(state){
-      state.numero--
+      state.cantidad--
     }
   },
   /* vuexFireMutations, */

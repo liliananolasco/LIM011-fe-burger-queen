@@ -18,7 +18,7 @@
             <!-- <button type="button" class="btn btn-lg btn-pill btn-primary">
               <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" width="80px">{{menu.nombre}}</button> -->
               <li v-for="item in menu.items" :key="item.id">
-                <button type="button" class="btn btn-outline-success" @click="mostrarPedido()">
+                <button type="button" class="btn btn-outline-success" @click="mostrarPedido(id)">
                 <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" class = "img">{{item.Name}}
                 ${{item.Price}}</button>
               </li>
@@ -40,10 +40,10 @@
       </thead>
       <tbody v-for="item in menu.items" :key="item.id">
         <tr>
-          <th scope="row">{{$store.state.numero}}</th>
+          <th scope="row">{{cantidad}}</th>
           <td>{{item.Name}}</td>
           <td>{{item.Price}}</td>
-          <td>{{item.Price * $store.state.numero}}</td>
+          <td>{{item.Price * cantidad}}</td>
           <button @click="$store.commit('aumentar')">+</button>
           <button @click="$store.commit('disminuir')">-</button>
           <button @click="removeMenu(n)">X</button>
@@ -82,7 +82,7 @@
 </template>
 <script>
 import {db} from '../db' 
-
+import { mapState } from 'vuex'
 export default {
 name: 'pedidos',
 props: {
@@ -226,17 +226,19 @@ data(){
     getImgUrl(imagen) {
       return require('../assets/'+imagen);
     },
-    mostrarPedido(Name){
-       this.pedidos = [];
-       if(Name === 'Hamburguesa S. Pollo'){
-         let pedido = {cantidad: 1, items:[] }
-         pedido.items = this.productos.filter(function(producto){
-           return producto.Name == 'Hamburguesa S. Pollo' && producto['Price']== 10;
-         })
-         this.pedidos.push(pedido);
+   /*  mostrarPedido(id){
+      pedido=[],
+      menus.forEach(Element,id) {
+        if(item.id === id){
+          pedido.push(Element)
+        }
+        return pedido
+        console.log(pedido)
+      } 
 
-       }
-    },
+      
+       
+    }, */
     /* agregarMenu(){
       this.pedido.push({cantidad: this.item.Name=1})
 
@@ -249,8 +251,11 @@ data(){
       this.saveMenu();
     },
   },
-  /* computed:{
-    sumarMenu() {
+  computed:{
+    
+    ...mapState(['cantidad'])
+    },
+    /*sumarMenu() {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       this.total = 0;
       this.menu.forEach((menu) => {
@@ -260,8 +265,8 @@ data(){
         this.total = this.total + menu.precio;
       });
       return this.total;
-    },
-  } */
+    },*/
+  
 }
 </script>
 
