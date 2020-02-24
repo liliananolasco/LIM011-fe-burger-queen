@@ -2,6 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.jpeg" width="300px" />
     <pedidos msg="seleccionar "/>
+    
   </div>
   
 </template>
@@ -11,6 +12,7 @@ import pedidos from './components/pedidos.vue'
 
 export default {
   name:'app',
+  
   firebase:{
     clientes:'',
     /* clientesRef */

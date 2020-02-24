@@ -5,11 +5,8 @@
       <input v-model="newCliente"> 
       <button @click="addCliente">ok</button>
     </p>
-    <div v-for="cliente in cliente" :key="cliente.id">
-      <p>
-        <span class="cliente">{{cliente}}</span> <button @click="removeCliente(n)">X</button>
-      </p>
-    </div>
+   
+ 
     <ul>
       <button @click="mostrarMenu('hamburguesas')">Hamburguesas</button>
       <button @click="mostrarMenu('bebidas')">Bebidas</button>
@@ -21,11 +18,14 @@
             <!-- <button type="button" class="btn btn-lg btn-pill btn-primary">
               <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" width="80px">{{menu.nombre}}</button> -->
               <li v-for="item in menu.items" :key="item.id">
-                <button type="button" class="btn btn-outline-success" @click="agregarMenu()">
-                <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" class = "img"> {{item.Name}}
-                {{item.Price}}</button>
+                <button type="button" class="btn btn-outline-success" @click="mostrarPedido()">
+                <img :src="getImgUrl(menu.imagen)" v-bind:alt="menu.nombre" class = "img">{{item.Name}}
+                ${{item.Price}}</button>
               </li>
           </ul>
+      </div>
+      <div v-for="cliente in cliente" :key="cliente.id">
+        <p> Cliente: <span class="cliente">{{cliente}}</span> <button @click="removeCliente(n)">X</button></p>
       </div>
 
     </ul>
@@ -40,24 +40,27 @@
       </thead>
       <tbody v-for="item in menu.items" :key="item.id">
         <tr>
-          <th scope="row">{{item.cantidad}}</th>
+          <th scope="row">{{$store.state.numero}}</th>
           <td>{{item.Name}}</td>
           <td>{{item.Price}}</td>
-          <td>{{item.Price * item.cantidad}}</td>
-          <button @click="item.cantidad++, item.precio+=item.precio">+</button>
-          <button @click="item.cantidad--, item.precio-=item.precio">-</button>
+          <td>{{item.Price * $store.state.numero}}</td>
+          <button @click="$store.commit('aumentar')">+</button>
+          <button @click="$store.commit('disminuir')">-</button>
           <button @click="removeMenu(n)">X</button>
         </tr>
       </tbody>
     </table> 
     
-    <li v-for="menu of menus" :key="menu.id">
+    <!-- <li v-for="menu of menus" :key="menu.id">
       
       <h3>{{pedido.cantidad}} - {{pedido.nombre}} - {{pedido.Precio}}
-      <button @click="pedido.cantidad++, pedido.precio+=pedido.precio">+</button>
-      <button @click="pedido.cantidad--, pedido.precio-=pedido.precio">-</button>
-      <button @click="removeMenu(n)">X</button></h3>
-    </li>
+        <button @click="$store.commit('aumentar')">+</button>
+        <h1>{{$store.state.numero}}</h1>
+        <button @click="$store.commit('disminuir')">-</button>
+        <h1>{{$store.state.numero}}</h1>
+        <button @click="removeMenu(n)">X</button>
+      </h3>
+    </li> -->
     <!-- <h4> TOTAL : {{sumarMenu}}</h4> -->
     <!-- <table class="table">
       <thead>
@@ -78,7 +81,7 @@
   </div>
 </template>
 <script>
-import {db} from '../db'
+import {db} from '../db' 
 
 export default {
 name: 'pedidos',
@@ -104,6 +107,7 @@ data(){
       alimento:0,
       total: 0,
       pedido:[],
+      pedidos:[],
       /* category:null,
       name:null,
       type:null,
@@ -139,8 +143,8 @@ data(){
         // eslint-disable-next-line no-console
         console.log(error);
       }
-    },
-    
+    }, 
+     
     /* addCliente(){
       clienteRef.Push(this.newCliente);
       this.newCliente.name = '';
@@ -172,38 +176,74 @@ data(){
         menu.items = this.productos.filter(function(producto){
               return producto.Category == 'Hamburguesas' && producto['Sub-Category'] == 'Doble';
           })
-        this.menus.push(menu);        
+        this.menus.push(menu);  
+        menu = {nombre: 'Sandwich', imagen: 'sandwich.jpg', items: []}
+        menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Hamburguesas' && producto['Sub-Category'] == 'Sandwich';
+          })
+        this.menus.push(menu);       
       }  if (Category === 'bebidas') {
-        this.menu = { nombre: 'Hamburguesa Doble', imagen: 'bebidas.jpg', items: []}
+        this.menu = { nombre: 'Gaceosas y Agua', imagen: 'gaseosa.jpg', items: []}
         this.menu.items = this.productos.filter(function(producto){
-              return producto.Category == 'Bebidas';
+              return producto.Category == 'Bebidas'&& producto['Sub-Category'] == 'Agua';
           });
         this.menus.push(this.menu);
+        this.menu = {nombre: 'Cafe', imagen: 'cafe.jpg', items: []}
+        this.menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Bebidas' && producto['Sub-Category'] == 'Caliente';
+          });
+        this.menus.push(this.menu); 
+        this.menu = {nombre: 'Jugo', imagen: 'jugo.jpeg', items: []}
+        this.menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Bebidas' && producto['Sub-Category'] == 'Fria';
+          });
+          this.menus.push(this.menu);
       } if (Category === 'acompañamientos') {
-        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'acompañamiento.jpg', items: []}
+        this.menu = {nombre: 'Papas', imagen: 'acompañamiento.jpg', items: []}
         this.menu.items = this.productos.filter(function(producto){
-              return producto.Category == 'Acompañamientos';
+              return producto.Category == 'Acompañamientos' && producto['Sub-Category'] == 'Papas';
           });
         this.menus.push(this.menu);
+        this.menu = {nombre: 'Cebolla', imagen: 'cebolla.jpg', items: []}
+        this.menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Acompañamientos' && producto['Sub-Category'] == 'Cebolla';
+          });
+          this.menus.push(this.menu);
       } if (Category === 'adicionales') {
-        this.menu = {id : 2, nombre: 'Hamburguesa Doble', imagen: 'adicionales.jpg', items: []}
+        this.menu = {nombre: 'Huevo', imagen: 'adicionales.jpg', items: []}
         this.menu.items = this.productos.filter(function(producto){
-              return producto.Category == 'Adicionales';
+              return producto.Category == 'Adicionales' && producto['Sub-Category'] == 'Huevo';
           });
         this.menus.push(this.menu);
+        this.menu = {nombre: 'Queso', imagen: 'queso.jpg', items: []}
+        this.menu.items = this.productos.filter(function(producto){
+              return producto.Category == 'Adicionales' && producto['Sub-Category'] == 'Queso';
+          });
+          this.menus.push(this.menu);
       }
       
     },
     getImgUrl(imagen) {
       return require('../assets/'+imagen);
     },
-    agregarMenu(){
+    mostrarPedido(Name){
+       this.pedidos = [];
+       if(Name === 'Hamburguesa S. Pollo'){
+         let pedido = {cantidad: 1, items:[] }
+         pedido.items = this.productos.filter(function(producto){
+           return producto.Name == 'Hamburguesa S. Pollo' && producto['Price']== 10;
+         })
+         this.pedidos.push(pedido);
+
+       }
+    },
+    /* agregarMenu(){
       this.pedido.push({cantidad: this.item.Name=1})
 
-        /* this.menu.push({
+        this.menu.push({
         nombre: Name, cantidad: this.menu.Name = 1, precio: this.menu.Price,
-      })      */ 
-    }, 
+      })      
+    },  */
     removeMenu(x) {
       this.menu.splice(x,1);
       this.saveMenu();
@@ -244,18 +284,31 @@ button {
   
 }
 .btn-outline-success{
-width: 200px;
-height: 100px;
-padding: 0;
+width: 250px;
+height: 120px;
+padding: 40px ;
 margin: 10px;
+display: flex;
+  align-items: flex-start;
+flex-wrap: nowrap;
+
+
 }
 #categorias{
   display: flex;
 }
 .img{
-  width: 50px;
-  padding: 0;
-  margin: 0;
+  width: 70px;
+  padding: 2px 0px;
+  margin: 2px 0px;
+  
+  
 }
+/* p .texto{
+  display: flex;
+  align-self: flex-end;
+  width: 150px;
+} 
+ */
 </style>
 
