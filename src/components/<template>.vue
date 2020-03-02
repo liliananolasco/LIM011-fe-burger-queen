@@ -253,3 +253,15 @@ margin: 30px;
 }
 </style>
 
+    <!-- <ul>
+      <button @click="$store.commit('getHamburguesas')" >Hamburguesas</button>
+      <button @click="$store.commit('getBebidas')">Bebidas</button>
+      <button @click="$store.commit('getAcompañamientos')">Acompañamientos</button>
+      <button @click="$store.commit('getAdicionales')">Adicionales</button>
+      <div v-for="hamburguesa of hamburguesas" :key="hamburguesa">
+        <p>{{hamburguesa.nombre}}- {{hamburguesa.precio}}</p>
+      </div>
+      <div v-for="cliente in cliente" :key="cliente.id">
+        <p> Cliente: <span class="cliente">{{cliente}}</span> <button @click="removeCliente(n)">X</button></p>
+      </div> 
+    </ul> -->

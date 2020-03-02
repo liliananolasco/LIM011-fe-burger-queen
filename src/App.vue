@@ -1,25 +1,29 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.jpeg" width="300px" />
-    <pedidos msg="seleccionar "/>
-    
+    <opciones/>
   </div>
-  
 </template>
 
 <script>
-import pedidos from './components/pedidos.vue'
+import opciones from './components/opciones.vue'
 
 export default {
   name:'app',
-  
   firebase:{
     clientes:'',
-    /* clientesRef */
   },
   components: {
-    pedidos
+    opciones,
   },
+  created(){
+    this.$store.dispatch('getHamburguesas');
+    this.$store.dispatch('getBebidas');
+    this.$store.dispatch('getAcompañamientos');
+    this.$store.dispatch('getAdicionales');
+  },
+  
+  
   addCliente() {
       // ensure they actually typed something
       if(!this.newCliente) return;
@@ -27,16 +31,13 @@ export default {
       this.newCliente = '';
       this.saveCliente();
     },
-    removeCliente(x) {
-      this.cliente.splice(x,1);
-      this.saveCliente();
-    },
+    
     saveCliente() {
       let parsed = JSON.stringify(this.cliente);
       localStorage.setItem('cliente', parsed);
     }
+  
   }
-
 </script>
 
 <style>
