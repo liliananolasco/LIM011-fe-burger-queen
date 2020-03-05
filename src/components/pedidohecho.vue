@@ -21,8 +21,8 @@
           <td>{{el.nombre}}</td>
           <td>{{el.precio}}</td>
           <td>{{el.precio * el.cantidad}}</td>
-          <button @click="aumentar(index), sumarTodo">+</button>
-          <button @click="disminuir(index), sumarTodo">-</button>
+          <button @click="aumentar(index), $store.dispatch('sumarMenu')">+</button>
+          <button @click="disminuir(index), $store.dispatch('sumarMenu')">-</button>
           <button @click="removeMenu">X</button>
         </tr>
       </tbody> 
