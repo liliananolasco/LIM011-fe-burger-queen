@@ -2,10 +2,9 @@
   <div>
     <h3>Nombre del cliente</h3>
     <p>
-      <input v-model="newCliente"> 
+      <input v-model="newCliente" v-on:keyup.enter = "addCliente"> 
       <button @click="addCliente">ok</button>
     </p>
-    <button @click="total++">+</button>
     <div id="dynamic-component-demo" class="demo">
       <button
         v-for="tab in tabs"
@@ -17,7 +16,7 @@
       v-bind:is="currentTabComponent"
       class="tab"
     ></component>
-    <pedidohecho :total="total"/>
+    <pedidohecho/>
     </div>
   </div>
 </template>
@@ -42,55 +41,33 @@ components:{
   Adicionales,
   Complementos,
 }, 
+data(){
+  return {
+    currentTab: 'Hamburguesas',
+    tabs: ['Hamburguesas', 'Bebidas', 'Adicionales', 'Complementos'],
+    cliente:[], 
+    newCliente:null,
+  }
+}, 
 
 computed: {
   currentTabComponent: function () {
     return this.currentTab;
   },
   ...mapState([ 'hamburguesas']),
+  
 },
-data(){
-  return {
-    currentTab: 'Hamburguesas',
-    tabs: ['Hamburguesas', 'Bebidas', 'Adicionales', 'Complementos'],
-    cliente:[],
-    newCliente:null,
-    total: 1, 
-  }
-}, 
-mounted(){
-  if(localStorage.getItem('cliente')) {
-    try {
-      this.cliente = JSON.parse(localStorage.getItem('cliente'));
-    } catch(e) {
-      localStorage.removeItem('cliente');
-    }
-  }
-},
-methods: {
-  /* addCliente(){
-  clienteRef.Push(this.newCliente);
-  this.newCliente.name = '';
-  }, */
+
+methods:{
   addCliente() {
     if(!this.newCliente) return;
     this.cliente.push(this.newCliente);
+    this.$store.state.pedido.clientePedido = this.cliente;
     this.newCliente = '';
-    this.saveCliente();
-  },
-  /* removeCliente(x) {
-  this.cliente.splice(x,1);
-  this.saveCliente();
-  }, */
-  saveCliente() {
-    let parsed = JSON.stringify(this.cliente);
-    localStorage.setItem('cliente', parsed);
-  },
-  removeMenu(x) {
-      this.menu.splice(x,1);
-      this.saveMenu();
-    }
-  },
+  }, 
+  
+}
+
 }
 </script>
 

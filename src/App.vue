@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <img alt="Vue logo" src="./assets/logo.jpeg" width="300px" />
     <opciones/>
   </div>
@@ -21,21 +21,8 @@ export default {
     this.$store.dispatch('getBebidas');
     this.$store.dispatch('getAcompañamientos');
     this.$store.dispatch('getAdicionales');
-  },
-  
-  
-  addCliente() {
-      // ensure they actually typed something
-      if(!this.newCliente) return;
-      this.cliente.push(this.newCliente);
-      this.newCliente = '';
-      this.saveCliente();
-    },
     
-    saveCliente() {
-      let parsed = JSON.stringify(this.cliente);
-      localStorage.setItem('cliente', parsed);
-    }
+  },
   
   }
 </script>

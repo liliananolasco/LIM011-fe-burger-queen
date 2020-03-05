@@ -14,33 +14,47 @@ Vue.config.productionTip = false
 export default new Vuex.Store({
   el: '#dynamic-component-demo',
   state: {
-    cantidad: 1,
     hamburguesas: [],
     acompañamientos:[],
     adicionales: [],
     bebidas: [],
     pedido: {
-      cliente: '',
+      clientePedido: [],
       total:0,
       items: []
     },
+    
   },
     
   mutations:  {
-    aumentar(state){
-      state.cantidad++
-    },
-    disminuir(state){
-      state.cantidad--
-    },
     setState(state,payload){
       state[payload.state] = payload.value
     },
+    llenarOrden(state, {value}){
+      // eslint-disable-next-line no-console
+      console.log(value)
+      state.pedido.items.push(value)
+    },
+    aumentar(state,index){
+      state.pedido.items[index].cantidad++
+    },
+    disminuir(state,index){
+      state.pedido.items[index].cantidad--
+    },
+    removeCliente(state,x) {
+      state.pedido.clientePedido.splice(x,1);
+      }, 
+    removeMenu(state, x){
+      state.pedido.items.splice(x,1)
+    },
+    sumarTodo(state, {value}){
+      state.pedido.total= value
+      console.log(value)
+    }
     
   }, 
   
   actions: {
-    
     getAcompañamientos(context){
       try{
         const acompañamiento = [];
@@ -49,23 +63,21 @@ export default new Vuex.Store({
           .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // eslint-disable-next-line no-console
-            console.log(`${doc.id} => ${doc.data().Nombre}`);
+            /* console.log(`${doc.id} => ${doc.data().Nombre}`); */
             let eventoData = {
               id: doc.id,
+              cantidad: doc.data().quantity,
               nombre: doc.data().Nombre,
               precio: doc.data().Precio,
               img: doc.data().Img,
               categoria: doc.data().Categoria,
-              
-          }
+            }
             acompañamiento.push(eventoData)
           });
           context.commit('setState',{
             state: 'acompañamientos',
             value: acompañamiento
           })
-          // eslint-disable-next-line no-console
-          console.log(acompañamiento)
       })
       } catch(error){
         // eslint-disable-next-line no-console
@@ -80,24 +92,22 @@ export default new Vuex.Store({
           .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // eslint-disable-next-line no-console
-            console.log(`${doc.id} => ${doc.data().Nombre}`);
+            /* console.log(`${doc.id} => ${doc.data().Nombre}`); */
             let eventoData = {
               id: doc.id, 
+              cantidad: doc.data().quantity,
               nombre: doc.data().Nombre,
               precio: doc.data().Precio,
               img: doc.data().Img,
               categoria: doc.data().Categoria,
-              
-          }
-          adicional.push(eventoData)
+            }
+            adicional.push(eventoData)
           });
           context.commit('setState',{
             state: 'adicionales',
             value: adicional
           })
-          // eslint-disable-next-line no-console
-          console.log(adicional)
-      })
+        })
       } catch(error){
         // eslint-disable-next-line no-console
         console.log(error);
@@ -111,24 +121,22 @@ export default new Vuex.Store({
           .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // eslint-disable-next-line no-console
-            console.log(`${doc.id} => ${doc.data().Nombre}`);
+            /* console.log(`${doc.id} => ${doc.data().Nombre}`); */
             let eventoData = {
               id: doc.id,
+              cantidad: doc.data().quantity,
               nombre: doc.data().Nombre,
               precio: doc.data().Precio,
               img: doc.data().Img,
               categoria: doc.data().Categoria,
-              
-          }
-          hamburguesa.push(eventoData)
+            }
+            hamburguesa.push(eventoData)
           });
           context.commit('setState',{
             state: 'Hamburguesas',
             value: hamburguesa
           })
-          // eslint-disable-next-line no-console
-          console.log(hamburguesa)
-      })
+        })
       } catch(error){
         // eslint-disable-next-line no-console
         console.log(error);
@@ -142,31 +150,59 @@ export default new Vuex.Store({
           .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // eslint-disable-next-line no-console
-            console.log(`${doc.id} => ${doc.data().Nombre}`);
+           /*  console.log(`${doc.id} => ${doc.data().Nombre}`); */
             let eventoData = {
               id: doc.id,
+              cantidad: doc.data().quantity,
               nombre: doc.data().Nombre,
               precio: doc.data().Precio,
               img: doc.data().Img,
               categoria: doc.data().Categoria,
-              
-          }
-          bebida.push(eventoData)
+            }
+            bebida.push(eventoData)
           });
           context.commit('setState',{
             state: 'Bebidas',
             value: bebida
           })
-          // eslint-disable-next-line no-console
-          console.log(bebida)
-      })
+        })
       } catch(error){
         // eslint-disable-next-line no-console
         console.log(error);
       }
     },
-  
-  
+    seleccionarProducto(context, producto){
+      const orden = {
+        cantidad: producto.cantidad,
+        nombre: producto.nombre,
+        precio: producto.precio,
+        
+      };
+      const payload = {value: orden}
+
+      context.commit('llenarOrden', payload)
+      context.dispatch('sumarMenu')
+    },
+    sumarMenu(context) {
+      let totales = 0;
+      context.state.pedido.items.forEach((item) => {
+        totales += item.precio*item.cantidad;
+      });
+      const payload = {value: totales}
+      context.commit('sumarTodo', payload);
+      console.log(totales) ;
+    },
+    /* aumentarCantidad(context,index){
+      
+      const payload = {value:context.pedido.items[index].cantidad++}
+      context.commit('aumentar', payload);
+      context.dispatch('sumarMenu')
+    },
+    disminuirCantidad(context,index){
+      context.pedido.items[index].cantidad--
+      context.commit('disminuir');
+      context.dispatch('sumarMenu')
+    }, */
   },
   modules: {
   }

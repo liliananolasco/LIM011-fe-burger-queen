@@ -1,9 +1,10 @@
 <template>
   <div>
-    <!-- <div v-for="cliente in cliente" :key="cliente.id"> 
-        <p> Cliente: <span class="cliente">{{total}}</span> <button @click="removeCliente(n)">X</button></p>
-      </div> -->
-<h1> numero: {{total}}</h1>
+    <div v-for="cliente in $store.state.pedido.clientePedido" :key="cliente.id">
+      <p>
+        <span class="cliente"> Cliente : {{cliente}}</span> <button @click="removeCliente">X</button>
+      </p>
+    </div>
 
     <table class = "table">
       <thead>
@@ -14,52 +15,29 @@
           <th scope="col">Precio Total</th>
         </tr>
       </thead>
-     <tbody v-for="orden in $store.state.pedido.items" :key="orden.id">
+     <tbody v-for="(el, index) in $store.state.pedido.items" :key="el.id">
         <tr>
-          <th scope="row">{{orden.cantidad}}</th>
-          <td>{{orden.nombre}}</td>
-          <td>{{orden.precio}}</td>
-          <td>{{orden.precio * orden.cantidad}}</td>
-          <button @click="$store.commit('aumentar')">+</button>
-          <button @click="$store.commit('disminuir')">-</button>
-          <button @click="removeMenu(n)">X</button>
+          <th scope="row">{{el.cantidad}}</th>
+          <td>{{el.nombre}}</td>
+          <td>{{el.precio}}</td>
+          <td>{{el.precio * el.cantidad}}</td>
+          <button @click="aumentar(index), sumarTodo">+</button>
+          <button @click="disminuir(index), sumarTodo">-</button>
+          <button @click="removeMenu">X</button>
         </tr>
       </tbody> 
     </table> 
-    
-
-    <!-- <h4> TOTAL : {{sumarMenu}}</h4> -->
-    
+    <h4> TOTAL : {{$store.state.pedido.total}}</h4>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'pedidohecho',
-  components:{
-
+  methods: {
+  ...mapMutations(['aumentar', 'disminuir', 'removeCliente', 'removeMenu', 'sumarTodo' ]), 
   },
-  data(){
-    return{
-      cantidad: 1,
-    }
-    
-  }, 
-  props:['total'],
-  methods:{
-    removeCliente(x) {
-      this.cliente.splice(x,1);
-      this.saveCliente();
-    },
-    seleccionarProducto(producto){
-      const orden = {
-        cantidad: 1,
-        nombre: producto.nombre,
-        precio: producto.precio,
-      };
-      
-      this.$store.state.pedido.items.push(orden)
-    }
-  }
 }
 </script>>
