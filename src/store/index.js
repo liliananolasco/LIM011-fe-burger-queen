@@ -18,12 +18,12 @@ export default new Vuex.Store({
     acompañamientos:[],
     adicionales: [],
     bebidas: [],
+    newCliente:null,
     pedido: {
-      clientePedido: [],
+      clientePedido:null,
       total:0,
       items: []
     },
-    
   },
     
   mutations:  {
@@ -41,17 +41,18 @@ export default new Vuex.Store({
     disminuir(state,index){
       state.pedido.items[index].cantidad--
     },
-    removeCliente(state,x) {
-      state.pedido.clientePedido.splice(x,1);
+    borrarCliente(state) {
+      state.pedido.clientePedido = null;
       }, 
-    removeMenu(state, x){
+    borrarMenu(state, x){
       state.pedido.items.splice(x,1)
     },
     sumarTodo(state, {value}){
       state.pedido.total= value
-      console.log(value)
-    }
-    
+    },
+    mostrarCliente(state, {value}){
+      state.pedido.clientePedido = value
+    },
   }, 
   
   actions: {
@@ -190,19 +191,17 @@ export default new Vuex.Store({
       });
       const payload = {value: totales}
       context.commit('sumarTodo', payload);
-      console.log(totales) ;
     },
-    /* aumentarCantidad(context,index){
-      
-      const payload = {value:context.pedido.items[index].cantidad++}
-      context.commit('aumentar', payload);
-      context.dispatch('sumarMenu')
-    },
-    disminuirCantidad(context,index){
-      context.pedido.items[index].cantidad--
-      context.commit('disminuir');
-      context.dispatch('sumarMenu')
-    }, */
+    addCliente(context,payload) {
+      let cliente = null;
+      if(!context.newCliente){
+        cliente = context.newCliente;
+        context.newCliente = '';
+      } 
+      context.commit('mostrarCliente',payload)
+      // eslint-disable-next-line no-console
+      console.log(cliente);
+    }, 
   },
   modules: {
   }

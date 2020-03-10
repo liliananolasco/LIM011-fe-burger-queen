@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-for="cliente in $store.state.pedido.clientePedido" :key="cliente.id">
+     <div>
       <p>
-        <span class="cliente"> Cliente : {{cliente}}</span> <button @click="removeCliente">X</button>
+        <span> Cliente : {{$store.state.pedido.clientePedido}}</span> <button @click="borrarCliente()">X</button>
       </p>
     </div>
 
-    <table class = "table">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th scope="col">Cantidad</th>
@@ -23,7 +23,7 @@
           <td>{{el.precio * el.cantidad}}</td>
           <button @click="aumentar(index), $store.dispatch('sumarMenu')">+</button>
           <button @click="disminuir(index), $store.dispatch('sumarMenu')">-</button>
-          <button @click="removeMenu">X</button>
+          <button @click="borrarMenu(), $store.dispatch('sumarMenu')">X</button>
         </tr>
       </tbody> 
     </table> 
@@ -37,7 +37,7 @@ import { mapMutations } from 'vuex';
 export default {
   name: 'pedidohecho',
   methods: {
-  ...mapMutations(['aumentar', 'disminuir', 'removeCliente', 'removeMenu', 'sumarTodo' ]), 
+  ...mapMutations(['aumentar', 'disminuir', 'borrarCliente', 'borrarMenu', 'sumarTodo' ]), 
   },
 }
 </script>>

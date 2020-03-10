@@ -33,4 +33,18 @@ export default {
   width: 200px;
   height: 280px;
 }
+.img{
+  width: 70px;
+  padding: 2px 0px;
+  margin: 2px 0px;
+}
+.btn-outline-success{
+  width: 250px;
+  height: 120px;
+  padding: 40px ;
+  margin: 10px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
 </style>

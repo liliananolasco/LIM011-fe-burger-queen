@@ -1,12 +1,12 @@
 <template>
   <div id="app" class="container">
     <img alt="Vue logo" src="./assets/logo.jpeg" width="300px" />
-    <opciones/>
+    <Opciones/>
   </div>
 </template>
 
 <script>
-import opciones from './components/opciones.vue'
+import Opciones from '@/components/Opciones.vue';
 
 export default {
   name:'app',
@@ -14,7 +14,7 @@ export default {
     clientes:'',
   },
   components: {
-    opciones,
+    Opciones,
   },
   created(){
     this.$store.dispatch('getHamburguesas');
