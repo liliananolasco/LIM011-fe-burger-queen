@@ -20,16 +20,14 @@ describe('Opciones.vue', () => {
       actions
     })
   })
-
   it('si addCliente fue llamada', () => {
       const wrapper = shallowMount(Opciones, { store, localVue })
       wrapper.find('button').trigger('click')
       expect(actions.addCliente).toHaveBeenCalled()
     })
+    
 });
-
-
-
+  
 
 /* describe('Opciones.vue', () => {
   it('renders props.msg when passed', () => {

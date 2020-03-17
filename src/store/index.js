@@ -52,6 +52,8 @@ export default new Vuex.Store({
     },
     mostrarCliente(state, {value}){
       state.pedido.clientePedido = value
+      // eslint-disable-next-line no-console
+      console.log(state.pedido.clientePedido)
     },
   }, 
   

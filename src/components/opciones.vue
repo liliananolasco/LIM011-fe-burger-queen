@@ -3,7 +3,9 @@
     <h3>Nombre del cliente</h3>
     <p>
       <input v-model="$store.state.newCliente"> 
-      <button @click="$store.dispatch('addCliente', {value: $store.state.newCliente})">ok</button>
+      <button v-on:click="show = !show" @click="$store.dispatch('addCliente', {value: $store.state.newCliente})">
+        ok
+      </button>
     </p>
     <div id="dynamic-component-demo" class="demo">
       <button
@@ -14,10 +16,12 @@
       class="btn btn-light">{{ tab }}</button>
     <component
       v-bind:is="currentTabComponent"
-      class="tab"
-    ></component>
-    <pedidohecho/>
+      class="tab">
+    </component>
     </div>
+    <transition name="fade">
+      <p v-if="show"><pedidohecho/></p>
+    </transition>
   </div>
 </template>
 
@@ -30,7 +34,7 @@ import Complementos from './complementos'
 import { mapMutations } from 'vuex'
 
 export default {
-  name: 'Opciones',
+  
   props: {
       msg: String
   },
@@ -43,8 +47,9 @@ export default {
   }, 
   data(){
     return {
-      currentTab: 'Adicionales',
+      currentTab: '',
       tabs: ['Hamburguesas', 'Bebidas', 'Adicionales', 'Complementos'],
+      show: false
       
     }
   }, 
@@ -60,4 +65,11 @@ export default {
 }
 </script>
 
-
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>

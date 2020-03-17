@@ -253,15 +253,56 @@ margin: 30px;
 }
 </style>
 
-    <!-- <ul>
-      <button @click="$store.commit('getHamburguesas')" >Hamburguesas</button>
-      <button @click="$store.commit('getBebidas')">Bebidas</button>
-      <button @click="$store.commit('getAcompañamientos')">Acompañamientos</button>
-      <button @click="$store.commit('getAdicionales')">Adicionales</button>
-      <div v-for="hamburguesa of hamburguesas" :key="hamburguesa">
-        <p>{{hamburguesa.nombre}}- {{hamburguesa.precio}}</p>
-      </div>
-      <div v-for="cliente in cliente" :key="cliente.id">
-        <p> Cliente: <span class="cliente">{{cliente}}</span> <button @click="removeCliente(n)">X</button></p>
-      </div> 
-    </ul> -->
+     <div id="list-demo">
+    <button v-on:click="add">
+      <img src="@/assets/mesero.png" class ="imgen">
+      <p>Mesero</p></button>
+    <button v-on:click="remove">
+      <img src="@/assets/cocina.png" class = "imgen">
+      <p>Cocina</p>
+    </button>
+    <transition-group name="list" tag="p">
+      <span v-for="item in items" v-bind:key="item" class="list-item">
+        {{ item }}
+      </span>
+    </transition-group>
+  </div>
+    <!-- <section class = "salas">
+      <div id="demo">
+        <button v-on:click="show = !show" class = "tipos">
+          <img src="@/assets/mesero.png" class ="imgen">
+          <p>Mesero</p>
+        </button>
+        <transition name="fade">
+          <section v-if="show">
+            <Opciones/>
+          </section>
+          <section v-if="show">
+            <Opciones/>
+          </section>
+        </transition>
+    </div>
+    <div id="demo">
+      <button v-on:click="show1 = !show1" class = "tipos">
+        <img src="@/assets/cocina.png" class = "imgen">
+        <p>Cocina</p>
+      </button>
+      <transition name="fade1">
+        <section v-if="show1">
+          <Cocina/>
+        </section>
+        <section v-if="show1">
+          <Cocina/>
+        </section>
+      </transition>
+    </div>
+    </section> -->
+    /* el: '#demo',
+  data() {
+    return{
+      show: false,
+      show1: false,
+    }
+    
+  }, */
+
