@@ -1,11 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 /* import { vuexFireMutations,  firestoreAction  } from 'vuexfire/'; */
- import {db} from '../db' 
-
+import {db} from '../db' 
 import VueRouter from 'vue-router'
-
-
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
@@ -31,12 +28,11 @@ export default new Vuex.Store({
       state[payload.state] = payload.value
     },
     llenarOrden(state, {value}){
-      // eslint-disable-next-line no-console
-      console.log(value)
       state.pedido.items.push(value)
     },
     aumentar(state,index){
       state.pedido.items[index].cantidad++
+
     },
     disminuir(state,index){
       state.pedido.items[index].cantidad--
@@ -54,6 +50,8 @@ export default new Vuex.Store({
       state.pedido.clientePedido = value
       // eslint-disable-next-line no-console
       console.log(state.pedido.clientePedido)
+      // eslint-disable-next-line no-console
+      
     },
   }, 
   
@@ -197,13 +195,24 @@ export default new Vuex.Store({
     addCliente(context,payload) {
       let cliente = null;
       if(!context.newCliente){
-        cliente = context.newCliente;
-        context.newCliente = '';
+        cliente = context.state.newCliente;
+        context.state.newCliente = '';
       } 
       context.commit('mostrarCliente',payload)
-      // eslint-disable-next-line no-console
-      console.log(cliente);
+      console.log(cliente)
     }, 
+    setPedidos(context){
+      db.collection("Pedidos").add({
+      cliente: context.state.pedido.clientePedido,
+      pedido: context.state.pedido.items,
+    })
+  .then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error);
+  });
+}
   },
   modules: {
   }

@@ -28,6 +28,7 @@
       </tbody> 
     </table> 
     <h4> TOTAL : {{$store.state.pedido.total}}</h4>
+    <button @click="$store.dispatch('setPedidos')">Enviar</button>
   </div>
 </template>
 

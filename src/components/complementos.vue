@@ -33,7 +33,7 @@ export default {
 }
 .btn-outline-success{
   width: 200px;
-  height: 280px;
+  height: 200px;
 }
 </style>
 

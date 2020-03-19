@@ -14,3 +14,5 @@ export const db = firebase
     measurementId: "G-TNZS7K2KLN"
   })
   .firestore()
+
+  
