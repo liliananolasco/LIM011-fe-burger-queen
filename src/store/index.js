@@ -206,7 +206,9 @@ export default new Vuex.Store({
     setPedidos(context){
       db.collection("Pedidos").add({
       cliente: context.state.pedido.clientePedido,
+      fecha:new Date(),
       pedido: context.state.pedido.items,
+      
       })
     .then(function(docRef) {
       // eslint-disable-next-line no-console
@@ -220,7 +222,7 @@ export default new Vuex.Store({
   getPedidos(context){
     try{
       const pedido = [];
-      db.collection('Pedidos')
+      db.collection('Pedidos').orderBy('fecha')
         .get()
         .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
