@@ -21,6 +21,7 @@ export default new Vuex.Store({
       total:0,
       items: []
     },
+    dataPedido:[]
   },
     
   mutations:  {
@@ -199,21 +200,50 @@ export default new Vuex.Store({
         context.state.newCliente = '';
       } 
       context.commit('mostrarCliente',payload)
+      // eslint-disable-next-line no-console
       console.log(cliente)
     }, 
     setPedidos(context){
       db.collection("Pedidos").add({
       cliente: context.state.pedido.clientePedido,
       pedido: context.state.pedido.items,
+      })
+    .then(function(docRef) {
+      // eslint-disable-next-line no-console
+      console.log(" Documento escrito con ID: ", docRef.id);
     })
-  .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id);
-  })
-  .catch(function(error) {
-      console.error("Error adding document: ", error);
-  });
-}
+    .catch(function(error) {
+      // eslint-disable-next-line no-console
+      console.error(" Error al agregar documento: ", error);
+    });
   },
+  getPedidos(context){
+    try{
+      const pedido = [];
+      db.collection('Pedidos')
+        .get()
+        .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // eslint-disable-next-line no-console
+          console.log(`${doc.id} => ${doc.data().pedido}`);
+          let eventoData = {
+            id: doc.id,
+            cliente: doc.data().cliente,
+            pedido: doc.data().pedido,
+          }
+          pedido.push(eventoData)
+        });
+        context.commit('setState',{
+          state: 'dataPedido',
+          value: pedido
+        })
+      })
+    } catch(error){
+      // eslint-disable-next-line no-console
+      console.log(error);
+      }
+  },
+},
   modules: {
   }
 })

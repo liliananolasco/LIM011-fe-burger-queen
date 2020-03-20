@@ -8,12 +8,15 @@
           <th scope="col">Nombre</th>
           <th scope="col">Chekin</th>
         </tr>
-        <tbody v-for="producto in productos" :key="producto.id">
+        <tbody v-for="(el) in $store.state.dataPedido" :key="el.id">
         <tr>
-          <th scope="row">{{producto.Category}}</th>
-          <td>{{producto.Name}}</td>
-          <td>{{producto.Type}}</td>
-          <td>{{producto.Price}}</td>
+          <th scope="row">{{el.cliente}}</th>
+
+          <td v-for="(item) in el.pedido" :key="item.id">
+<p>{{item.nombre}}</p>
+
+          </td>
+          
         </tr>
       </tbody> 
       </thead>
@@ -25,7 +28,11 @@ export default {
   name: 'Cocina',
   props: {
     msg: String
-  }
+  },
+  created(){
+    this.$store.dispatch('getPedidos');
+    
+  },
 }
 
 </script>

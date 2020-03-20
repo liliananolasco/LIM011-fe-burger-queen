@@ -40,5 +40,9 @@ export default {
   methods: {
   ...mapMutations(['aumentar', 'disminuir', 'borrarCliente', 'borrarMenu', 'sumarTodo' ]), 
   },
+  created(){
+    this.$store.dispatch('getPedidos');
+    
+  },
 }
 </script>>
