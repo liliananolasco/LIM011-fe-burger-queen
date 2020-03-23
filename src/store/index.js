@@ -33,7 +33,6 @@ export default new Vuex.Store({
     },
     aumentar(state,index){
       state.pedido.items[index].cantidad++
-
     },
     disminuir(state,index){
       state.pedido.items[index].cantidad--
@@ -51,9 +50,8 @@ export default new Vuex.Store({
       state.pedido.clientePedido = value
       // eslint-disable-next-line no-console
       console.log(state.pedido.clientePedido)
-      // eslint-disable-next-line no-console
-      
     },
+   
   }, 
   
   actions: {
@@ -208,11 +206,12 @@ export default new Vuex.Store({
       cliente: context.state.pedido.clientePedido,
       fecha:new Date(),
       pedido: context.state.pedido.items,
-      
       })
+
     .then(function(docRef) {
       // eslint-disable-next-line no-console
       console.log(" Documento escrito con ID: ", docRef.id);
+      
     })
     .catch(function(error) {
       // eslint-disable-next-line no-console

@@ -28,7 +28,7 @@
       </tbody> 
     </table> 
     <h4> TOTAL : {{$store.state.pedido.total}}</h4>
-    <button @click="$store.dispatch('setPedidos')">Enviar</button>
+    <button @click="$store.dispatch('setPedidos'), remove()">Enviar</button>
   </div>
 </template>
 
@@ -38,7 +38,7 @@ import { mapMutations } from 'vuex';
 export default {
   name: 'pedidohecho',
   methods: {
-  ...mapMutations(['aumentar', 'disminuir', 'borrarCliente', 'borrarMenu', 'sumarTodo' ]), 
+  ...mapMutations(['aumentar', 'disminuir', 'borrarCliente', 'borrarMenu', 'sumarTodo', 'remove' ]), 
   },
   created(){
     this.$store.dispatch('getPedidos');

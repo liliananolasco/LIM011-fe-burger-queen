@@ -22,6 +22,9 @@
 <script>
 import Mesero from '@/components/Opciones.vue';
 import Cocina from '@/components/Cocina.vue';
+/* import bootstrap from '../node_modules/bootstrap'; */
+import bootstrap from '../node_modules/bootstrap/dist/js/bootstrap.js'
+
 export default {
   name:'app',
 
@@ -77,6 +80,9 @@ data(){
   width: 80px;
   padding: 2px 0px;
   margin: 2px 0px;
+}
+.tab{
+  margin: 3em 0;
 }
 
 </style>
