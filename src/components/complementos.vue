@@ -1,7 +1,7 @@
 <template>
   <div>
-    <li v-for="el in $store.state.acompañamientos" :key="el.id" class="complementos">
-      <button type="button" class="btn btn-outline-success" @click="$store.dispatch('seleccionarProducto', el)" >
+    <li v-for="el in Acompañamientos" :key="el.id" class="complementos">
+      <button type="button" class="btn btn-outline-success" @click="seleccionarProducto(el)" >
         <img :src="getImgUrl(el.img)" v-bind:alt="el.nombre" class = "img">
         <h5 class="card-title">{{el.nombre}}</h5>
         <p class="card-text">$ {{el.precio}}</p>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
   name: 'complementos',
   props: {
@@ -21,8 +21,10 @@ export default {
     getImgUrl(img) {
       return img ? require('../assets/'+img) : "";
     },
-    ...mapActions(['llenarOrden'])
-    
+    ...mapActions(['seleccionarProducto'])
+  },
+  computed: {
+    ...mapState(['Acompañamientos'])
   }
 }
 </script>

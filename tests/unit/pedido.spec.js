@@ -1,69 +1,55 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
-import pedidohecho from '@/components/pedidohecho.vue'
-/* import storeConfig from './store-config'
-import { cloneDeep } from 'lodash' */
-import MockFirebase from 'mock-cloud-firestore'
-
+import MockFirebase from 'mock-cloud-firestore';
 
 const fixtureData = {
   __collection__: {
-    Hamburguesas: {
+    pedido: {
       __doc__: {
         123: {
-          Categoria: "Hamburguesa Simple",
-          Nombre: 'Hamburguesa S. de Pollo',
-          Precio: 10,
-          Cantidad:1
+          check: true,
+          Cliente: 'liliana',
+          fecha: '25 Marzo 2020',
+          itemsPedido:{
+            cantidad:3,
+            checkUnd:true,
+            nombre: 'Aros de cebolla',
+            precio: 5
+          }
         },
       }
     },
-    Bebidas: {
-      __doc__: {
-        234: {
-          Categoria: 'Bebidas',
-          Nombre: 'Agua 500ml',
-          Precio: 5,
-          Cantidad:1
-        },
-      }
-    },
-    Adicionales: {
-      __doc__: {
-        345: {
-          Categoria: 'Adicionales',
-          Nombre: 'Huevo',
-          Precio: 1,
-          Cantidad:1
-        },
-      }
-    },
-    Acompañamientos: {
-      __doc__: {
-        456: {
-          Categoria: 'acompañamiento',
-          Nombre: 'Aros de cebolla',
-          Precio: 5,
-          Cantidad:1
-        },
-      }
-    }
   }
   
 }
 
 global.firebase = new MockFirebase(fixtureData, { isNainveSnapshotListenerEnabled:true});
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
+import pedidohecho from '@/components/pedidohecho.vue' 
+import { setPedidos, getAcompañamientos } from '@/store'
 
-const localVue = createLocalVue()
+describe('setPedidos', () => {
+  it('deberia de poder agredar un pedido', (done) => {
+    return setPedidos('pan con pollo').then((data) =>{
+      const callback = (pedidos) => {
+        console.log(pedidos)
+        done()
+      }
+
+      getAcompañamientos(callback)
+    })
+  })
+})
+
+/* const localVue = createLocalVue()
 localVue.use(Vuex)
 describe('pedidohecho.vue', () => {
   let actions 
   let store
-  /* let mutations */
+  /* let mutations 
 
   beforeEach(() => {
     actions = {
-      sumarMenu: jest.fn()
+      setPedidos: jest.fn()
     }
     store = new Vuex.Store({
       actions
@@ -72,10 +58,10 @@ describe('pedidohecho.vue', () => {
   it('si sumarMenu fue llamada', () => {
       const wrapper = shallowMount(pedidohecho, { store, localVue })
       wrapper.find('button').trigger('click')
-      expect(actions.sumarMenu).toHaveBeenCalled()
+      expect(actions.setPedidos).toHaveBeenCalled()
     })
     
-});
+}); */
 
 
 /* import { createLocalVue } from '@vue/test-utils'

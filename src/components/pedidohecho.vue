@@ -2,7 +2,7 @@
   <div>
      <div>
       <p>
-        <span> Cliente : {{$store.state.pedido.clientePedido}}</span> <button @click="borrarCliente()">X</button>
+        <span> Cliente : {{pedido.clientePedido}}</span> <button @click="borrarCliente()">X</button>
       </p>
     </div>
 
@@ -15,30 +15,35 @@
           <th scope="col">Precio Total</th>
         </tr>
       </thead>
-     <tbody v-for="(el, index) in $store.state.pedido.items" :key="el.id">
+     <tbody v-for="(el, index) in pedido.items" :key="el.id">
         <tr>
           <th scope="row">{{el.cantidad}}</th>
           <td>{{el.nombre}}</td>
           <td>{{el.precio}}</td>
           <td>{{el.precio * el.cantidad}}</td>
-          <button @click="aumentar(index), $store.dispatch('sumarMenu')">+</button>
-          <button @click="disminuir(index), $store.dispatch('sumarMenu')">-</button>
-          <button @click="borrarMenu(), $store.dispatch('sumarMenu')">X</button>
+          <button @click="aumentar(index), sumarMenu()">+</button>
+          <button @click="disminuir(index), sumarMenu()">-</button>
+          <button @click="borrarMenu(), sumarMenu()">X</button>
         </tr>
       </tbody> 
     </table> 
-    <h4> TOTAL : {{$store.state.pedido.total}}</h4>
-    <button @click="$store.dispatch('setPedidos'), remove()">Enviar</button>
+    <h4> TOTAL : {{pedido.total}}</h4>
+    <button @click= "setPedidos()">Enviar</button>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapActions, mapState } from 'vuex';
 
 export default {
   name: 'pedidohecho',
   methods: {
-  ...mapMutations(['aumentar', 'disminuir', 'borrarCliente', 'borrarMenu', 'sumarTodo', 'remove' ]), 
+  ...mapMutations(['aumentar', 'disminuir', 'borrarCliente', 'borrarMenu', 'sumarTodo' ]), 
+  ...mapActions(['setPedidos', 'sumarMenu']),
+  
+  },
+  computed: {
+    ...mapState(['pedido'])
   },
   created(){
     this.$store.dispatch('getPedidos');

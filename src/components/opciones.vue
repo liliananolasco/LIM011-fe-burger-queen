@@ -2,8 +2,8 @@
   <div>
     <h3>Nombre del cliente</h3>
     <p>
-      <input v-model="$store.state.newCliente"> 
-      <button v-on:click="show = !show" @click="$store.dispatch('addCliente', {value: $store.state.newCliente})">
+      <input v-model= "$store.state.newCliente" /> 
+      <button v-on:click="show = !show" @click="addCliente({value: newCliente})">
         ok
       </button>
     </p>
@@ -31,10 +31,9 @@ import Hamburguesas from './Hamburguesas.vue';
 import Bebidas from './bebidas.vue';
 import Adicionales from './adicionales.vue';
 import Complementos from './complementos'
-import { mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
-  
   props: {
       msg: String
   },
@@ -57,9 +56,12 @@ export default {
     currentTabComponent: function () {
       return this.currentTab;
     },
+        ...mapState(['newCliente'])
+
   },
   methods:{
-    ...mapMutations(['mostrarCliente'])
+    ...mapActions(['addCliente']),
+
     
   }
 }

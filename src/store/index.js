@@ -11,17 +11,22 @@ Vue.config.productionTip = false
 export default new Vuex.Store({
   el: '#dynamic-component-demo',
   state: {
-    hamburguesas: [],
-    acompañamientos:[],
-    adicionales: [],
-    bebidas: [],
-    newCliente:null,
+    Hamburguesas: [],
+    Acompañamientos:[],
+    Adicionales: [],
+    Bebidas: [],
+    newCliente:'',
     pedido: {
       clientePedido:null,
       total:0,
       items: []
     },
-    dataPedido:[]
+    dataPedido:[],
+    pedidoSeleccionado: {
+      cliente: '',
+      index: 0,
+      itemsPedido: []
+    }
   },
     
   mutations:  {
@@ -51,7 +56,12 @@ export default new Vuex.Store({
       // eslint-disable-next-line no-console
       console.log(state.pedido.clientePedido)
     },
-   
+    mostrarPedido(state,index){
+      // eslint-disable-next-line no-console
+      console.log('pedido seleccionado: ', state.dataPedido[index])
+      state.pedidoSeleccionado = state.dataPedido[index],
+      state.pedidoSeleccionado.index = index
+    }
   }, 
   
   actions: {
@@ -75,7 +85,7 @@ export default new Vuex.Store({
             acompañamiento.push(eventoData)
           });
           context.commit('setState',{
-            state: 'acompañamientos',
+            state: 'Acompañamientos',
             value: acompañamiento
           })
       })
@@ -104,7 +114,7 @@ export default new Vuex.Store({
             adicional.push(eventoData)
           });
           context.commit('setState',{
-            state: 'adicionales',
+            state: 'Adicionales',
             value: adicional
           })
         })
@@ -172,16 +182,20 @@ export default new Vuex.Store({
       }
     },
     seleccionarProducto(context, producto){
-      const orden = {
-        cantidad: producto.cantidad,
-        nombre: producto.nombre,
-        precio: producto.precio,
-        
-      };
-      const payload = {value: orden}
-
-      context.commit('llenarOrden', payload)
-      context.dispatch('sumarMenu')
+      const productos = context.state.pedido.items.filter(item => item.nombre
+        === producto.nombre)
+      if (productos.length === 0) {
+        const orden = {
+          cantidad: producto.cantidad,
+          nombre: producto.nombre,
+          precio: producto.precio,
+          checkUnd: false
+        };
+        const payload = {value: orden}
+  
+        context.commit('llenarOrden', payload)
+        context.dispatch('sumarMenu')
+      } 
     },
     sumarMenu(context) {
       let totales = 0;
@@ -206,6 +220,7 @@ export default new Vuex.Store({
       cliente: context.state.pedido.clientePedido,
       fecha:new Date(),
       pedido: context.state.pedido.items,
+      check: false
       })
 
     .then(function(docRef) {
@@ -217,34 +232,52 @@ export default new Vuex.Store({
       // eslint-disable-next-line no-console
       console.error(" Error al agregar documento: ", error);
     });
-  },
-  getPedidos(context){
-    try{
-      const pedido = [];
-      db.collection('Pedidos').orderBy('fecha')
-        .get()
-        .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // eslint-disable-next-line no-console
-          console.log(`${doc.id} => ${doc.data().pedido}`);
-          let eventoData = {
-            id: doc.id,
-            cliente: doc.data().cliente,
-            pedido: doc.data().pedido,
-          }
-          pedido.push(eventoData)
-        });
-        context.commit('setState',{
-          state: 'dataPedido',
-          value: pedido
+    },
+    getPedidos(context){
+      try{
+        const pedido = [];
+        db.collection('Pedidos')
+        .where("check", "==", false).orderBy('fecha')
+          .get()
+          .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            // eslint-disable-next-line no-console
+            console.log(`${doc.id} => ${doc.data().pedido}`);
+            let eventoData = {
+              id: doc.id,
+              cliente: doc.data().cliente,
+              itemsPedido: doc.data().pedido,
+
+            }
+            pedido.push(eventoData)
+          });
+          context.commit('setState',{
+            state: 'dataPedido',
+            value: pedido
+          })
         })
+      } catch(error){
+        // eslint-disable-next-line no-console
+        console.log(error);
+        }
+    },
+    editarCheck(context){
+      var washingtonRef = db.collection("Pedidos").doc(context.state.pedidoSeleccionado.id);
+      // Set the "capital" field of the city 'DC'
+      return washingtonRef.update({
+        check:true,
+        itemsPedido: context.state.pedidoSeleccionado.itemsPedido
       })
-    } catch(error){
-      // eslint-disable-next-line no-console
-      console.log(error);
-      }
+      .then(function() {
+          // eslint-disable-next-line no-console
+          console.log("Document successfully updated!");
+      })
+      .catch(function(error) {
+          // eslint-disable-next-line no-console
+          console.error("Error updating document: ", error);
+      });
+    },
   },
-},
   modules: {
   }
 })
