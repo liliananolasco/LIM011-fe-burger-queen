@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Opciones from '@/components/Opciones.vue'
-
+import {seleccionarProducto} from '@/store/index.js'
 
 
 const localVue = createLocalVue()
@@ -14,7 +14,7 @@ describe('Opciones.vue', () => {
 
   beforeEach(() => {
     actions = {
-      addCliente: jest.fn()
+      addCliente: jest.fn(),
     }
     store = new Vuex.Store({
       actions
@@ -25,9 +25,21 @@ describe('Opciones.vue', () => {
       wrapper.find('button').trigger('click')
       expect(actions.addCliente).toHaveBeenCalled()
     })
-    
 });
-  
+test(' selecciona Producto', () => {
+  const orden = {
+    cantidad: 1,
+    nombre: 'lili',
+    precio: 5,
+    checkUnd: false
+  };
+
+  const commit = jest.fn()
+  seleccionarProducto({ commit }, orden)
+
+  expect(commit).toHaveBeenCalledWith('llenarOrden', orden)
+})
+
 
 /* describe('Opciones.vue', () => {
   it('renders props.msg when passed', () => {
