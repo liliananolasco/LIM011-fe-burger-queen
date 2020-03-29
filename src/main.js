@@ -1,24 +1,16 @@
 import Vue from 'vue'
-/* import {db} from './db' */
 import App from './App.vue'
-import VueRouter from 'vue-router'
+import router from './router'
 import store from './store'
 import { firestorePlugin } from 'vuefire'
 import './registerServiceWorker'
 
-Vue.use(VueRouter)
 Vue.config.productionTip = false
-
 Vue.use(firestorePlugin);
 
-
 new Vue({
-  render: h => h(App),
+  router,
   store,
-  
-}).$mount('#app')
+  render: h => h(App),
+  }).$mount('#app')
 
-/* const hello = new Vue({
-  el: '#hello',
-  Cliente: '',
-}) */

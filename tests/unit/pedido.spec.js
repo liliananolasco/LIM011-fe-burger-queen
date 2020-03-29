@@ -22,9 +22,9 @@ const fixtureData = {
 }
 
 global.firebase = new MockFirebase(fixtureData, { isNainveSnapshotListenerEnabled:true});
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+/* import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import pedidohecho from '@/components/pedidohecho.vue' 
+import pedidohecho from '@/components/pedidohecho.vue'  */
 import { setPedidos, getAcompañamientos } from '@/store'
 
 describe('setPedidos', () => {

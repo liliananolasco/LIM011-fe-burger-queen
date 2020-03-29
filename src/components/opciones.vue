@@ -4,10 +4,10 @@
     <p>
       <input v-model= "$store.state.newCliente" /> 
       <button v-on:click="show = !show" @click="addCliente({value: newCliente})">
-        ok
+        Ok
       </button>
     </p>
-    <div id="dynamic-component-demo" class="demo">
+    <div  class="demo">
       <button
         v-for="tab in tabs"
         v-bind:key="tab"
@@ -74,4 +74,28 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+img{
+  width: 30%;
+  padding: 0;
+  margin: 1% 2%;
+}
+.btn-outline-success {
+  width: 20%;
+  height: 10%;
+  font-size: 15px !important;
+  padding: 0.5%;
+  margin: 10px;
+}
+.card-title{
+  padding: 0%;
+  margin: 0;
+}
+.tab{
+  display: flex;
+  flex-wrap: wrap;
+}
+.boton{
+  background-color: rgb(207, 241, 209);
+}
+
 </style>

@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <li v-for="el in Adicionales" :key="el.id" class="adicionales">
-      <button type="button" class="btn btn-outline-success" @click="seleccionarProducto(el)">
+  <div >
+    <section v-for="el in Adicionales" :key="el.id" class="btn btn-outline-success">
+      <button class="boton" @click="seleccionarProducto(el)">
         <img :src="getImgUrl(el.img)" v-bind:alt="el.nombre" class = "img">
-        <h5 class="card-title">{{el.nombre}}</h5>
-        <p class="card-text">$ {{el.precio}}</p>
+        <p class="card-title">{{el.nombre}} <br> $ {{el.precio}}</p>
       </button>
-    </li>
+    </section>
   </div>
 </template>
 
@@ -29,12 +28,11 @@ export default {
 }
 </script>
 
-<style>
-.adicionales{
-  display: inline;
+<style scoped>
+
+.btn-outline-success {
+  width: 20%;
+  height: 10%;
 }
-.btn-outline-success{
-  width: 200px;
-  height: 200px;
-}
+
 </style>

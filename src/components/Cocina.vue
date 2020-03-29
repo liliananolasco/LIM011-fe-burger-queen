@@ -1,4 +1,3 @@
-
 <template>
   <div  class="hello">
     <table class="table table-bordered">
@@ -66,9 +65,6 @@ import { mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Cocina',
-  props: {
-    msg: String
-  },
   created(){
     this.$store.dispatch('getPedidos');
   },
