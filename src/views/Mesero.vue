@@ -1,6 +1,7 @@
 <template>
     <div>
-        <Menu />
+      <router-link to="/">Home</router-link> |
+      <Menu />
     </div>
 </template>
 <script>

@@ -83,6 +83,7 @@ export const crearPedidos = (db, state) => {
     cliente: state.pedido.clientePedido,
     fecha:new Date(),
     pedido: state.pedido.items,
+    total: state.pedido.total,
     check: false
     })
   .then(function(docRef) {

@@ -23,6 +23,6 @@ export const mostrarCliente = (state, {value}) => {
   state.pedido.clientePedido = value
 };
 export const mostrarPedido = (state,index) => {
-  state.pedidoSeleccionado = state.dataPedido[index],
+  state.pedidoSeleccionado = state.dataPedido[index]
   state.pedidoSeleccionado.index = index
 };

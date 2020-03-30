@@ -8,7 +8,7 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody v-for="(el, index) in $store.state.dataPedido" :key="el.id">
+      <tbody v-for="(el, index) in dataPedido" :key="el.id">
         <tr>
           <th scope="row">{{el.cliente}}</th>
           <td>{{index+1}}</td>
@@ -27,7 +27,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Cliente: {{$store.state.pedidoSeleccionado.cliente}} Nº de Pedido: {{$store.state.pedidoSeleccionado.index+1}} </h5>
+              <h5 class="modal-title" id="exampleModalLabel">Cliente: {{pedidoSeleccionado.cliente}} Nº de Pedido: {{pedidoSeleccionado.index+1}} </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -40,7 +40,7 @@
                 <th scope="col">Check</th>
               </tr>
             </thead>
-            <tr  v-for="item in $store.state.pedidoSeleccionado.itemsPedido" :key="item.id">
+            <tr  v-for="item in pedidoSeleccionado.itemsPedido" :key="item.id">
               <td>{{item.cantidad}}</td>
               <td>{{item.nombre}}</td>
               <td>
@@ -54,25 +54,21 @@
           </div>
         </div>
       </div>
-
-
-
-
   </div>
 </template>
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
+
 
 export default {
   name: 'Cocina',
-  created(){
-    this.$store.dispatch('getPedidos');
-  },
   methods:{
     ...mapMutations(['mostrarPedido']),
     ...mapActions(['editarCheck', 'getPedidos'])
+  },
+  computed: {
+    ...mapState(['dataPedido', 'pedidoSeleccionado'])
   }
-  
 }
 
 </script>

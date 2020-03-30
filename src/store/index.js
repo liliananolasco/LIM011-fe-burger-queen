@@ -7,9 +7,7 @@ import * as actions from './actions'
 Vue.use(Vuex)
 /* Vue.use(VueRouter)
 Vue.config.productionTip = false */
-
 export default new Vuex.Store({
-  
   state: {
     Hamburguesas: [],
     Acompañamientos:[],

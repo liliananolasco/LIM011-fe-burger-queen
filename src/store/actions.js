@@ -71,7 +71,7 @@ export const setPedidos = (context) => {
   apiDb.crearPedidos(db, context.state)
 };
 export const getPedidos = (context) => {
-  apiDb.listaPedidos = (db, (pedido) =>{
+  apiDb.listaPedidos(db, (pedido) =>{
     context.commit('setState',{
       state: 'dataPedido',
       value: pedido

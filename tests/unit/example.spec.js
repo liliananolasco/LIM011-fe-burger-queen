@@ -26,28 +26,3 @@ describe('Opciones.vue', () => {
       expect(actions.addCliente).toHaveBeenCalled()
     })
 });
-test(' selecciona Producto', () => {
-  const orden = {
-    cantidad: 1,
-    nombre: 'lili',
-    precio: 5,
-    checkUnd: false
-  };
-
-  const commit = jest.fn()
-  seleccionarProducto({ commit }, orden)
-
-  expect(commit).toHaveBeenCalledWith('llenarOrden', orden)
-})
-
-
-/* describe('Opciones.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(Opciones, {
-      propsData: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
-  })
-})  */
-
