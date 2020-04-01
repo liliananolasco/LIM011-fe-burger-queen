@@ -5,7 +5,7 @@
       <img :src="getImgUrl(el.img)" v-bind:alt="el.nombre" class = "img">
       <p class="card-title">{{el.nombre}} <br> $ {{el.precio}}</p>
     </button>  
-    </section>
+    </section >
   </div>
 </template>
 
@@ -30,5 +30,7 @@ export default {
 </script>
 
 <style>
-
+.card-title{
+  color:red;
+}
 </style>

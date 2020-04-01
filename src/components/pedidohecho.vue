@@ -15,9 +15,9 @@
           <th scope="col">Precio Total</th>
         </tr>
       </thead>
-     <tbody v-for="(el, index) in pedido.items" :key="el.id">
-        <tr>
-          <th scope="row">{{el.cantidad}}</th>
+     <tbody>
+        <tr  v-for="(el, index) in pedido.items" :key="el.id">
+          <td>{{el.cantidad}}</td>
           <td>{{el.nombre}}</td>
           <td>{{el.precio}}</td>
           <td>{{el.precio * el.cantidad}}</td>

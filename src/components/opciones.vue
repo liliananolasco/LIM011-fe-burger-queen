@@ -3,7 +3,7 @@
     <h3>Nombre del cliente</h3>
     <p>
       <input v-model= "$store.state.newCliente" /> 
-      <button v-on:click="show = !show" @click="addCliente({value: newCliente})">
+      <button @click="show = addCliente({value: newCliente})">
         Ok
       </button>
     </p>

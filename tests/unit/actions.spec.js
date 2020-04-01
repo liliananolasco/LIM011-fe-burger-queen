@@ -8,6 +8,7 @@ jest.mock('@/controller/controller-firebase', () => ({
   listaBebidas: jest.fn(),
   listaPedidos: jest.fn(),
   crearPedidos: jest.fn(),
+  editarPedido: jest.fn()
 }))
 
 describe('Acciones con llamadas a ApiDb', () => {
@@ -25,9 +26,9 @@ describe('Acciones con llamadas a ApiDb', () => {
     }
     firebase.listaAcompañamientos.mockImplementation((db, callback) => { callback(Acompañamientos) })
     await actions.getAcompañamientos({ commit })
-    done()
     expect(commit).toHaveBeenCalledWith('setState', payload)
-  }, 20000)
+    done()
+  })
 });
 
 describe('Acciones con llamadas a ApiDb', () => {
@@ -45,9 +46,9 @@ describe('Acciones con llamadas a ApiDb', () => {
     }
     firebase.listaAdicionales.mockImplementation((db, callback) => { callback(Adicionales) })
     await actions.getAdicionales({ commit })
-    done()
     expect(commit).toHaveBeenCalledWith('setState', payload)
-  }, 20000)
+    done()
+  })
 });
 
 describe('Acciones con llamadas a ApiDb', () => {
@@ -65,9 +66,9 @@ describe('Acciones con llamadas a ApiDb', () => {
     }
     firebase.listaHamburguesas.mockImplementation((db, callback) => { callback(Hamburguesas) })
     await actions.getHamburguesas({ commit })
-    done()
     expect(commit).toHaveBeenCalledWith('setState', payload)
-  }, 20000)
+    done()
+  })
 });
 
 describe('Acciones con llamadas a ApiDb', () => {
@@ -85,9 +86,9 @@ describe('Acciones con llamadas a ApiDb', () => {
     }
     firebase.listaBebidas.mockImplementation((db, callback) => { callback(Bebidas) })
     await actions.getBebidas({ commit })
-    done()
     expect(commit).toHaveBeenCalledWith('setState', payload)
-  }, 20000)
+    done()
+  })
 });
 
 describe('Acciones con llamadas a ApiDb', () => {
@@ -100,14 +101,15 @@ describe('Acciones con llamadas a ApiDb', () => {
       }
     ]
     const payload = {
-      state: 'Pedidos',
+      state: 'dataPedido',
       value: Pedidos
     }
     firebase.listaPedidos.mockImplementation((db, callback) => { callback(Pedidos) })
     await actions.getPedidos({ commit })
-    done()
     expect(commit).toHaveBeenCalledWith('setState', payload)
-  }, 20000)
+    expect(firebase.listaPedidos.mockImplementation()).toHaveBeenCalled()
+    done()
+  })
 });
 
 describe('Acciones con llamadas a ApiDb', () => {
@@ -115,10 +117,83 @@ describe('Acciones con llamadas a ApiDb', () => {
     const context = jest.fn()
     firebase.crearPedidos.mockImplementation()
     await actions.setPedidos(context)
+    expect(firebase.crearPedidos.mockImplementation()).toHaveBeenCalled()
+    done()
+  })
+});
+
+describe('Acciones con llamadas a ApiDb', () => {
+  it('editar Check', async (done) => {
+    const context = jest.fn()
+    firebase.editarPedido.mockImplementation()
+    await actions.editarCheck(context)
     done()
     expect(context).toHaveBeenCalledWith('state')
   }, 20000)
 });
+
+test('mostrar cliente', () => {
+  const newCliente =  {
+    value:'lili'
+  }
+
+  const context = {
+    state:{
+      newCliente:''
+    },
+    commit: jest.fn()
+  }
+  
+  actions.addCliente(context, newCliente)
+  expect(context.commit).toHaveBeenCalledWith('mostrarCliente', newCliente)
+});
+
+test('seleccionar Producto', () => {
+  const payload = {
+    cantidad: 6,
+    nombre: 'Gaseosa',
+  };
+  const context={
+    state:{
+      pedido: {
+        items:''
+      }
+    },
+    
+    commit: jest.fn()
+  };
+    
+  actions.seleccionarProducto(payload)
+  expect(context.commit).toHaveBeenCalledWith('llenarOrden', context.state.pedido.items)
+});
+
+test('sumar Menu', () => {
+  const payload =  {
+    value: 17
+  }
+  const context = {
+    state: {
+      pedido:{
+        total:0,
+        items:[
+          {
+            cantidad:2,
+            precio: 5
+          },
+          {
+            cantidad:1,
+            precio: 7
+          }
+        ]
+      }
+    },
+    commit: jest.fn()
+  }
+  actions.sumarMenu(context)
+  expect(context.commit).toHaveBeenCalledWith('sumarTodo',payload)
+});
+
+
 
 
 

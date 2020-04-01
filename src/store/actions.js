@@ -35,14 +35,15 @@ export const getBebidas = (context) => {
   })
 };
 export const addCliente = (context,payload) => {
-  let cliente = null;
-  if(!context.newCliente){
-    cliente = context.state.newCliente;
-    context.state.newCliente = '';
-  } 
-  context.commit('mostrarCliente',payload)
   // eslint-disable-next-line no-console
-  console.log(cliente)
+  console.log(payload.value)
+  if(payload.value != ''){
+    context.state.newCliente = '';
+    context.commit('mostrarCliente',payload)
+    return true
+  } else {
+    return false
+  }
 }; 
 export const seleccionarProducto = (context, producto) => {
   const productos = context.state.pedido.items.filter(item => item.nombre
