@@ -149,22 +149,36 @@ test('mostrar cliente', () => {
 });
 
 test('seleccionar Producto', () => {
-  const payload = {
-    cantidad: 6,
-    nombre: 'Gaseosa',
+  const producto = {
+    cantidad: 1,
+    checkUnd: false,
+    nombre: 'gaseosa',
+    precio: 7,
   };
+  const payload={
+    value : producto
+  }
   const context={
     state:{
       pedido: {
-        items:''
+        items:[
+          {
+            cantidad: 2,
+            checkUnd: false,
+            nombre:'agua',
+            precio: 5,
+            
+          }
+        ]
       }
     },
     
-    commit: jest.fn()
-  };
-    
-  actions.seleccionarProducto(payload)
-  expect(context.commit).toHaveBeenCalledWith('llenarOrden', context.state.pedido.items)
+    commit: jest.fn(),
+    dispatch: jest.fn()
+  }; 
+  actions.seleccionarProducto(context, producto)
+  expect(context.commit).toHaveBeenCalledWith('llenarOrden', payload);
+  expect(context.dispatch).toHaveBeenCalledWith('sumarMenu')
 });
 
 test('sumar Menu', () => {
