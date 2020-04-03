@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import Opciones from '@/components/Opciones'
-import Hamburguesas from '@/components/Hamburguesas.vue'
+import pedidohecho from '@/components/pedidohecho'
+import Hamburguesas from '@/components/Hamburguesas'
 import complementos from '@/components/complementos'
 import bebidas from '@/components/bebidas'
 import adicionales from '@/components/adicionales'
@@ -9,7 +9,7 @@ import adicionales from '@/components/adicionales'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe(('Hamburguesas.vue','complementos.vue'), () => {
+describe(('Hamburguesas','complementos', 'bebidas', 'adicionales'), () => {
   let actions 
   let store
   
@@ -73,9 +73,61 @@ describe(('Hamburguesas.vue','complementos.vue'), () => {
   });
 });
 
+describe('pedidohecho.vue', () => {
+  let actions
+  let store
+  let mutations
 
-// it('si addCliente fue llamada', () => {
-    //   const wrapper = shallowMount(Opciones, { store, localVue })
-    //   wrapper.find('button').trigger('click')
-    //   expect(actions.addCliente).toHaveBeenCalled()
-    // });
+  beforeEach(() => {
+    actions = {
+      setPedidos: jest.fn(),
+      sumarMenu: jest.fn(),
+      getPedidos: jest.fn()
+    },
+    mutations = {
+      aumentar: jest.fn(),
+      disminuir: jest.fn(),
+      borrarCliente: jest.fn(),
+      borrarMenu: jest.fn(),
+      sumarTodo: jest.fn(),
+    },
+    store = new Vuex.Store({
+      state: {
+        pedido:{
+          clientePedido: 'lili',
+          items:[
+            {
+              nombre:'agua',
+              cantidad: 1
+            }
+          ]
+        }
+      },
+      actions,
+      mutations
+    })
+  })
+  it('si fue setPedidos fue llamada', () => {
+    const wrapper = shallowMount(pedidohecho, { store, localVue })
+    wrapper.find({ ref: 'enviar' }).trigger('click')
+    expect(actions.setPedidos).toHaveBeenCalled()
+  });
+  it('si fue aumentar fue llamada', () => {
+    const wrapper = shallowMount(pedidohecho, { store, localVue })
+    wrapper.find({ref: 'aumentar'}).trigger('click')
+    expect(mutations.aumentar).toHaveBeenCalled()
+    expect(actions.sumarMenu).toHaveBeenCalled()
+  });
+  it('si fue disminuir fue llamada', () => {
+    const wrapper = shallowMount(pedidohecho, { store, localVue })
+    wrapper.find({ref: 'disminuir'}).trigger('click')
+    expect(mutations.disminuir).toHaveBeenCalled()
+    expect(actions.sumarMenu).toHaveBeenCalled()
+  });
+  it('si fue borrarMenu fue llamada', () => {
+    const wrapper = shallowMount(pedidohecho, { store, localVue })
+    wrapper.find({ref: 'borrarMenu'}).trigger('click')
+    expect(mutations.borrarMenu).toHaveBeenCalled()
+    expect(actions.sumarMenu).toHaveBeenCalled()
+  })
+})

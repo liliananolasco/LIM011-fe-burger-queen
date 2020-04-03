@@ -35,8 +35,6 @@ export const getBebidas = (context) => {
   })
 };
 export const addCliente = (context,payload) => {
-  // eslint-disable-next-line no-console
-  console.log(payload.value)
   if(payload.value != ''){
     context.state.newCliente = '';
     context.commit('mostrarCliente',payload)

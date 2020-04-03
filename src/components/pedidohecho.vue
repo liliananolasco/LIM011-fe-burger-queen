@@ -21,14 +21,14 @@
           <td>{{el.nombre}}</td>
           <td>{{el.precio}}</td>
           <td>{{el.precio * el.cantidad}}</td>
-          <button @click="aumentar(index), sumarMenu()">+</button>
-          <button @click="disminuir(index), sumarMenu()">-</button>
-          <button @click="borrarMenu(), sumarMenu()">X</button>
+          <button ref ="aumentar" @click="aumentar(index), sumarMenu()">+</button>
+          <button ref ="disminuir" @click="disminuir(index), sumarMenu()">-</button>
+          <button ref ="borrarMenu" @click="borrarMenu(), sumarMenu()">X</button>
         </tr>
       </tbody> 
     </table> 
     <h4> TOTAL : {{pedido.total}}</h4>
-    <button @click= "setPedidos()">Enviar</button>
+    <button ref="enviar" @click="setPedidos()">Enviar</button>
   </div>
 </template>
 
